@@ -11,6 +11,9 @@ public class Rectangle {
         this.height = height;
     }
 
+    /*
+     * 문제와 풀이
+     */
     @Override
     public String toString() {
         return "Rectangle{" +
@@ -27,4 +30,8 @@ public class Rectangle {
         return width == rectangle.width && height == rectangle.height;
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(width, height);
+    }
 }
