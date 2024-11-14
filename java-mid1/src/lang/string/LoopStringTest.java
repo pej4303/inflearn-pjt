@@ -2,8 +2,8 @@ package lang.string;
 
 public class LoopStringTest {
     public static void main(String[] args) {
-        // test(); // => 실행시간 : 대략 8~9초
-        test2(); // => 실행시간 :  대략 0.008초
+        test();
+        // test2();
 
         /**
          * 정리
@@ -22,7 +22,8 @@ public class LoopStringTest {
         String result = "";
 
         for (int i=0; i<100000; i++){
-            result += "Hello Java";
+           result += "Hello Java";
+//            System.out.println(i);
         }
 
         long endTime = System.currentTimeMillis();

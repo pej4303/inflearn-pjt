@@ -22,9 +22,9 @@ public class StringMain {
         /*
          *  String 선언 방법
          * */
-        // 방법1)
-        String str1 = "pej"; // => 방법2처럼 자바 알아서 변경해줌
-        // 방법2)
+        // 방법1) 리터럴 방식
+        String str1 = "pej"; // => 방법2처럼 자바 알아서 변경해줌 => 인프런 문의글 남겼는데 사실이 아님!!!(https://www.inflearn.com/community/questions/1423424/string%ED%81%B4%EB%9E%98%EC%8A%A4-%EB%A6%AC%ED%84%B0%EB%9F%B4-%EB%B0%A9%EC%8B%9D-%EA%B4%80%EB%A0%A8-%EC%A7%88%EB%AC%B8)
+        // 방법2) new 연산자를 이용한 방식
         String str2 = new String("pej");
 
         /**
