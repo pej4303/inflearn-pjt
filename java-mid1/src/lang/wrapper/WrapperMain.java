@@ -26,5 +26,42 @@ public class WrapperMain {
         Integer num2 = Integer.valueOf(10);
         System.out.println("== 비교 : " + (num1 == num2));
         System.out.println("equals 비교 : " + num1.equals(num2) );
+
+        Integer a = 127; // 캐싱 범위 내
+        Integer b = 127; // 캐싱 범위 내
+        System.out.println(a == b); // true (캐싱된 동일 객체 참조)
+
+        Integer c = 128; // 캐싱 범위 초과
+        Integer d = 128; // 캐싱 범위 초과
+        System.out.println(c == d); // false (서로 다른 객체 생성)
+
+        // 값 자체 비교를 원할 경우 equals()를 사용해야 함
+        System.out.println(c.equals(d)); // true (값이 동일하므로)
+
+//        autoBoxing();
+    }
+
+    /**
+     * 오토방식, 언방식
+     */
+    public static void autoBoxing() {
+        // 기본형 -> 래퍼로 변경
+        int value = 1;
+//         Integer boxedValue = Integer.valueOf(value);
+        Integer boxedValue = value; // 오토 박싱(Auto-Boxing)
+        // 래퍼 -> 기본형으로 변경
+//        int i = boxedValue.intValue();
+        int i = boxedValue;        // 오토 언박싱(Auto-Unboxing)
+
+        /**
+         * 오토박싱, 오토언박싱 : 기본형과 래퍼클래스간의 자동 형변환을 해주는 것, 자바 1.5버전부터 추가되었음
+         */
+        System.out.println("오토박싱 = " + boxedValue);
+        System.out.println("언박싱 = " + i);
+
+
+        Integer tmp = null;
+        int num = tmp;
+        System.out.println(num);
     }
 }

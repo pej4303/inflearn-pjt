@@ -17,13 +17,15 @@ public class LoopStringTest {
          */
     }
 
+    /**
+     * String
+     */
     public static void test() {
         long startTime = System.currentTimeMillis();
         String result = "";
 
         for (int i=0; i<100000; i++){
            result += "Hello Java";
-//            System.out.println(i);
         }
 
         long endTime = System.currentTimeMillis();
@@ -33,7 +35,7 @@ public class LoopStringTest {
     }
 
     /**
-     * StringBuilder로 변경
+     * StringBuilder
      */
     public static void test2() {
         long startTime = System.currentTimeMillis();
