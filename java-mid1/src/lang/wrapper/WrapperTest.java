@@ -1,9 +1,11 @@
 package lang.wrapper;
 
+import java.math.BigInteger;
+
 public class WrapperTest {
     public static void main(String[] args) {
 //        test(); // 0.4초
-        test2();  // 5.5초
+        test2(); // 3.7초
     }
 
     /**

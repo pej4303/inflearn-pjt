@@ -4,6 +4,10 @@ import java.util.Arrays;
 
 public class WrapperMain {
     public static void main(String[] args) {
+        autoBoxing();
+    }
+
+    public static void wrapper1() {
         /**
          * -127 ~ 128까지 자바가 문자열풀처럼 미리 만들어놓음
          * new 연산자를 이용해서 매번 새로운 객체를 만드는 것보다
@@ -26,19 +30,21 @@ public class WrapperMain {
         Integer num2 = Integer.valueOf(10);
         System.out.println("== 비교 : " + (num1 == num2));
         System.out.println("equals 비교 : " + num1.equals(num2) );
+    }
 
-        Integer a = 127; // 캐싱 범위 내
-        Integer b = 127; // 캐싱 범위 내
+    public static void wrapper2() {
+        // 캐싱 범위 내 (-128 ~ 127)
+        Integer a = 127;
+        Integer b = 127;
         System.out.println(a == b); // true (캐싱된 동일 객체 참조)
 
-        Integer c = 128; // 캐싱 범위 초과
-        Integer d = 128; // 캐싱 범위 초과
+        // 캐싱 범위 초과
+        Integer c = 128;
+        Integer d = 128;
         System.out.println(c == d); // false (서로 다른 객체 생성)
 
         // 값 자체 비교를 원할 경우 equals()를 사용해야 함
         System.out.println(c.equals(d)); // true (값이 동일하므로)
-
-//        autoBoxing();
     }
 
     /**
@@ -47,10 +53,10 @@ public class WrapperMain {
     public static void autoBoxing() {
         // 기본형 -> 래퍼로 변경
         int value = 1;
-//         Integer boxedValue = Integer.valueOf(value);
+        // Integer boxedValue = Integer.valueOf(value);
         Integer boxedValue = value; // 오토 박싱(Auto-Boxing)
         // 래퍼 -> 기본형으로 변경
-//        int i = boxedValue.intValue();
+        // int i = boxedValue.intValue();
         int i = boxedValue;        // 오토 언박싱(Auto-Unboxing)
 
         /**
@@ -58,10 +64,5 @@ public class WrapperMain {
          */
         System.out.println("오토박싱 = " + boxedValue);
         System.out.println("언박싱 = " + i);
-
-
-        Integer tmp = null;
-        int num = tmp;
-        System.out.println(num);
     }
 }
