@@ -2,6 +2,9 @@ package enumeration;
 
 import java.util.Arrays;
 
+/**
+ * 6장. 열거형
+ */
 public class EnumMain {
     public static void main(String[] args) {
 //        test1();
@@ -39,6 +42,7 @@ public class EnumMain {
         System.out.println("ref BASIC = " + refValue(Grade.BASIC));
         System.out.println("ref GOLD = " + refValue(Grade.GOLD));
         System.out.println("ref DIAMOND = " + refValue(Grade.DIAMOND));
+
     }
 
    /**
@@ -50,7 +54,7 @@ public class EnumMain {
         return Integer.toHexString(System.identityHashCode(obj));
     }
 
-    public static void discountTest() {
+    public static void discountTest1() {
         int price = 10000;
         DiscountService discountService = new DiscountService();
 
@@ -62,6 +66,23 @@ public class EnumMain {
 
         int price3 = discountService.discount2(Grade.DIAMOND, price);
         System.out.println("DIAMOND 등급의 할인 금액: " + price3);
+    }
+
+    /**
+     * enum의 할인율 계산 메소드를 이용해서 구함
+     */
+    public static void discountTest() {
+        int price = 10000;
+
+        int price1 =  GradeRef.BASIC.discount(price);
+        System.out.println("BASIC 등급의 할인 금액: " + price1);
+
+        int price2 = GradeRef.GOLD.discount(price);
+        System.out.println("GOLD 등급의 할인 금액: " + price2);
+
+        int price3 = GradeRef.DIAMOND.discount(price);
+        System.out.println("DIAMOND 등급의 할인 금액: " + price3);
+
     }
 
     public static void enumMethodTest() {

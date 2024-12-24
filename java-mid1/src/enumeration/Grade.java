@@ -1,5 +1,5 @@
 package enumeration;
 
 public enum Grade {
-    BASIC, GOLD, DIAMOND
+    BASIC, GOLD, DIAMOND;
 }
