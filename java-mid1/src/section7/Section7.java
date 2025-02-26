@@ -1,8 +1,8 @@
 package section7;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
+import java.time.temporal.ChronoField;
+import java.time.temporal.ChronoUnit;
 
 /**
  * 7장. 날짜와 시간
@@ -10,8 +10,7 @@ import java.time.LocalTime;
 public class Section7 {
     public static void main(String[] args) {
         Section7 section7 = new Section7();
-//        section7.localDataMain();
-        section7.localDateTimeMain();
+        section7.chronoFieldMain();
     }
 
     /**
@@ -55,8 +54,7 @@ public class Section7 {
     }
 
     /**
-     * LocalDateTime :
-     *  LocalDate와 LocalTime을 내부에 가지고 날짜와 시간을 모두 표현한다.
+     * LocalDateTime : LocalDate와 LocalTime을 내부에 가지고 날짜와 시간을 모두 표현한다.
      */
     public void localDateTimeMain() {
         LocalDateTime dt = LocalDateTime.now();
@@ -93,5 +91,92 @@ public class Section7 {
          * isEqual() : "시간"만 같은지 확인
          * equals() : 객체의 타입, 타임존 등등이 모두 같아야 함
          */
+    }
+
+    /**
+     * ZoneDateTime
+     */
+    public void zoneIdMain() {
+        // 이용가능한 타임존
+        for (String availableZoneId : ZoneId.getAvailableZoneIds()) {
+            ZoneId zoneId = ZoneId.of(availableZoneId);
+            System.out.println(zoneId + " / " + zoneId.getRules());
+        }
+        
+        // 시스템이 사용하는 기본 타임존
+        ZoneId systemDefault = ZoneId.systemDefault();
+        System.out.println("ZoneId.systemDefault = " + systemDefault);
+    }
+
+    /**
+     * ZonedDateTime : LocalDateTime + ZoneId 합쳐진 것이다.
+     */
+    public void zonedDateTimeMain() {
+        ZonedDateTime now = ZonedDateTime.now();
+        System.out.println("now = " + now);
+
+        LocalDateTime localDateTime = LocalDateTime.of(2025, 12, 25, 23,37,00);
+        ZonedDateTime zonedDateTime = ZonedDateTime.of(localDateTime, ZoneId.of("Asia/Seoul"));
+        System.out.println(zonedDateTime);
+
+        // 타임존 변경 (헝가리)
+        ZonedDateTime utc1 = zonedDateTime.withZoneSameInstant(ZoneId.of("Europe/Budapest"));
+        System.out.println(utc1);
+    }
+
+    /**
+     * Period, Duration : 시간의 간격을 표현하는데 사용한다.
+     *  - Period : 두 날짜 사이의 간격을 년, 월, 일 단위로 표시한다.
+     *  - Duration : 두 시간 사이의 간격을 시, 분, 초(나노초) 단위로 나타낸다.
+     */
+    public void periodMain() {
+        Period period = Period.ofDays(10);
+        System.out.println("period = " + period);
+
+        // 날짜 계산
+        LocalDate curDt = LocalDate.of(2025, 1, 1);
+        LocalDate calDt = curDt.plus(period);
+        System.out.println("curDt = " + curDt);
+        System.out.println("calDt = " + calDt);
+
+        // 날짜 차이 구하기
+        LocalDate startDt = LocalDate.of(2025, 1, 1);
+        LocalDate endDt = LocalDate.of(2025, 3, 13);
+        Period between = Period.between(startDt, endDt);
+        System.out.println("between = " + between);
+
+
+    }
+
+    /**
+     * ChronoUnit : 단독으로 사용되지 않고 날짜와 시간 조작시 사용됨
+     *  - TemporalUnit 인터페이스 구현체
+     */
+    public void chronoUnitMain() {
+        ChronoUnit[] values = ChronoUnit.values();
+        for (ChronoUnit value : values) {
+            System.out.println("value = " + value);
+        }
+
+        System.out.println("ChronoUnit.HOURS = " + ChronoUnit.HOURS);
+
+        // 시간 차이 구하기
+        LocalTime localTime = LocalTime.of(1, 10, 0);
+        LocalTime localTime2 = LocalTime.of(1, 20, 0);
+        System.out.println("ChronoUnit.MINUTES.between(localTime, localTime2) = " + ChronoUnit.MINUTES.between(localTime, localTime2));
+    }
+
+    /**
+     * ChronoField : 단독으로 사용되지 않고 날짜와 시간 조작시 사용됨
+     *  - TemporalUnit 인터페이스 구현체
+     */
+    public void chronoFieldMain() {
+        ChronoField[] chronoFields = ChronoField.values();
+        for (ChronoField chronoField : chronoFields) {
+            System.out.println(chronoField + " / range = " + chronoField.range());
+        }
+
+        System.out.println("ChronoField.MONTH_OF_YEAR.range() = " + ChronoField.MONTH_OF_YEAR.range());
+        System.out.println("ChronoField.DAY_OF_MONTH.range() = " + ChronoField.DAY_OF_MONTH.range());
     }
 }
