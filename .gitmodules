@@ -1,0 +1,3 @@
+[submodule "inflearn-pjt/portfolio"]
+	path = inflearn-pjt/portfolio
+	url = https://github.com/pej4303/inflearn-pjt.git
