@@ -68,6 +68,10 @@ class ExperienceRepositoryTest(
 
     @Test
     fun testFindAll() {
+        /**
+         * N+1 문제가 발생함
+         *  => experience 테이블에서 한번 조회하고 해당하는 상세 내역 조회까지 총 11번 쿼리가 발생함
+         */
         println("########## testFindAll 시작 ##########")
 
         var experienceList = experienceRepository.findAll()
@@ -80,5 +84,18 @@ class ExperienceRepositoryTest(
         }
 
         println("########## testFindAll 종료 ##########")
+    }
+
+    @Test
+    fun testFindAllByIsActive() {
+        println("########## findAllByIsActive 테스트 시작##########")
+        val experiences = experienceRepository.findAllByIsActive(true)
+        assertThat(experiences).hasSize(DATA_SIZE)
+        println("experiences.size: ${experiences.size}")
+        for (experience in experiences) {
+            assertThat(experience.details).hasSize(experience.title.toInt())
+            println("experience.details.size: ${experience.details.size}")
+        }
+        println("##########  findAllByIsActive 테스트 종료 ##########")
     }
 }
