@@ -22,4 +22,6 @@ class Skill(
     @Column(name = "skill_type")
     @Enumerated(value = EnumType.STRING)
     var type: SkillType = SkillType.valueOf(type)
+
+    var isActive: Boolean = isActive
 }
