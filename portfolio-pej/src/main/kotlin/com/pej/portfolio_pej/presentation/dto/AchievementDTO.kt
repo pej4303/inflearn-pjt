@@ -12,3 +12,4 @@ data class AchievementDTO (
     val host: String,
     val achievedDate: String?
 )
+
