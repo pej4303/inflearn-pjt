@@ -25,6 +25,7 @@ class PresentationService(
         // IntroductionDTO 생성자로 매핑해줘서 return
         return introductions.map { item -> IntroductionDTO(item) }
    }
+
     @Transactional(readOnly = true)
     fun getLinks(): List<LinkDTO> {
         val links = presentationRepository.getActiveLinks()
