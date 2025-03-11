@@ -11,56 +11,187 @@
     + 주문(TB_ORDER)
     + 주문상세(TB_ORDER_DETAIL)
     + 상품(TB_PRODUCT)
-    + 거래처(TB_COMPANY)
     + 사용자(TB_USER)
     + 공통코드(TB_CODE)
 
 ## 📝 API
 
 ### 1️⃣ 주문 조회 
-+ **URL:** `GET /orders`
-+ **설명:** 전체 주문 목록을 조회합니다.
++ **URL:** `GET /order`
++ **설명:** 기간내에 있는 주문을 조회하거나 특정 주문을 조회합니다.
 + **Request Parameters:**
   | 이름      | 타입    | 필수 여부 | 설명                    |
   |----------|--------|----------|------------------------|
   | `orderNo`   | String | 선택     | 주문번호 |
   | `startDt` | String | 필수     | 주문 시작일자  |
   | `endDt` | String | 선택     | 주문 종료일자(기본값: 현재일자)|
-
-+ **Response Example:**
++ **Request Body:**
   ```json
   {
-    "total": 2,
-    "page": 1,
-    "size": 10,
-    "orders": [
+    "orderList": [
       {
-        "id": 1,
-        "userId": 101,
-        "totalPrice": 50000,
-        "status": "CONFIRMED",
-        "orderedAt": "2024-03-10T12:00:00Z"
+        "orderNo": 1,
+        "orderLineNo": "001",
+        "orderSts": 10,
+        "userId": "U001",
+        "productCd": "10000",
+        "productNm": "테스트상품명1",
+        "price": 10000,
+        "qty": 1,
+        "vat": 1000,
+        "totalPrice": 11000,
+        "createdDt": "2024-03-11T12:00:00Z",
+        "createdBy": "admin",
+        "updatedAt": "2024-03-11T12:00:00Z"
+        "updatedBy": "admin",
+        "delYn": "N",
+        "memo": "테스트주문1"
       },
       {
-        "id": 2,
-        "userId": 102,
-        "totalPrice": 75000,
-        "status": "PENDING",
-        "orderedAt": "2024-03-10T14:30:00Z"
+        "orderNo": 1,
+        "orderLineNo": "001",
+        "orderSts": 10,
+        "userId": "U001",
+        "productCd": "10001",
+        "productNm": "테스트상품명2",
+        "price": 10000,
+        "qty": 1,
+        "vat": 1000,
+        "totalPrice": 11000,
+        "createdDt": "2024-03-11T12:00:00Z",
+        "createdBy": "admin",
+        "updatedAt": "2024-03-11T12:00:00Z"
+        "updatedBy": "admin",
+        "delYn": "N",
+        "memo": "테스트주문2"
       }
     ]
   }
   ```
-  <!--
 ### 2️⃣ 주문 등록
-+ **URL :** `POST/orders`
++ **URL :** `POST/order`
 + **설명:** 주문을 등록합니다.
-
++ **Request Body:**
+    ```json
+    {
+      "userId": "U001",
+      "items": [
+        {
+          "productCd": 10000,
+          "price": 10000,
+          "qty": 1,
+          "memo": "테스트주문1"
+        },
+        {
+          "productCd": 10001,
+          "price": 10000,
+          "qty": 1,
+          "memo": "테스트주문2"
+        }
+      ]
+    }
+    ```
++ **Response Body:**
+    ```json
+    {
+      "code": 200,
+      "msg": "주문 등록 성공",
+      "orderNo": 1,
+      "orderSts": "10"
+    }
+    
+    {
+      "code": 400,
+      "msg": "요청 데이터 오류",
+      "orderNo": "",
+      "orderSts": ""
+    }
+    ```
 ### 3️⃣ 주문 수정
-+ **URL :** `PUT /orders/{id}`
++ **URL :** `PUT /order`
 + **설명:** 특정 주문을 수정합니다.
++ **Request Parameters:**
+  | 이름      | 타입    | 필수 여부 | 설명                    |
+  |----------|--------|----------|------------------------|
+  | `orderNo`   | String | 필수     | 주문번호 |
+  | `items` | Array | 필수     | 변경할 주문정보들(상품코드, 가격, 수량, 메모)  |
++ **Request Body:**
+    ```json
+    {
+      "orderNo": 1,
+      "items": [
+        {
+          "productCd": 10000,
+          "price": 10000,
+          "qty": 2,
+          "memo": "테스트주문1"
+        },
+        {
+          "productCd": 10001,
+          "price": 10000,
+          "qty": 2,
+          "memo": "테스트주문2"
+        }
+      ]
+    }
+    ```
++ **Response Body:**
+    ```json
+    {
+      "code": 200,
+      "msg": "주문 수정 성공",
+      "orderNo": 1,
+      "orderSts": "10"
+    }
+    
+    {
+      "code": 404,
+      "msg": "해당 주문번호의 정보가 존재하지 않습니다.",
+      "orderNo": "",
+      "orderSts": ""
+    }
+    
+    {
+      "code": 400,
+      "msg": "배송완료 상태여서 변경할 수 없습니다.",
+      "orderNo": "1",
+      "orderSts": "60"
+    }
+    ```
 
 ### 4️⃣ 주문 삭제
-+ **URL :** `DELETE /orders/{id}`
++ **URL :** `DELETE /order/{orderNo}`
 + **설명:** 특정 주문을 삭제합니다.
-  -->
++ **Request Parameters:**
+  | 이름      | 타입    | 필수 여부 | 설명                    |
+  |----------|--------|----------|------------------------|
+  | `orderNo`   | String | 필수     | 주문번호 |
++ **Request Body:**
+    ```json
+    {
+      "orderNo": 1
+    }
+    ```
++ **Response Body:**
+    ```json
+    {
+      "code": 200,
+      "msg": "주문 삭제 성공",
+      "orderNo": 1,
+      "orderSts": "0"
+    }
+    
+    {
+      "code": 404,
+      "msg": "해당 주문번호의 정보가 존재하지 않습니다.",
+      "orderNo": "",
+      "orderSts": ""
+    }
+    
+    {
+      "code": 400,
+      "msg": "배송완료 상태여서 변경할 수 없습니다.",
+      "orderNo": "1",
+      "orderSts": "60"
+    }
+    ```
