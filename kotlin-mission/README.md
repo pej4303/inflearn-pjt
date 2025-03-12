@@ -1,6 +1,8 @@
 # kotlin-mission
 인프런 워밍업 클럽 3기 백엔드 과제 리포지토리
 
+![이미지](https://private-user-images.githubusercontent.com/48613952/421873869-115b710a-ba79-47d9-9e23-82ac9c94c300.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NDE3ODE1MDcsIm5iZiI6MTc0MTc4MTIwNywicGF0aCI6Ii80ODYxMzk1Mi80MjE4NzM4NjktMTE1YjcxMGEtYmE3OS00N2Q5LTllMjMtODJhYzljOTRjMzAwLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTAzMTIlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwMzEyVDEyMDY0N1omWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPWM1MjIzYjdjZGVhZDdmMmIyNDE3MjE0OGM2OTc0OTY5NTBiMjlhZGFmNmI5NTNiNmY4MGM3OGYzM2I0YjA0YzcmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.OkvBAwERyHd4xgyKcYr3H0HaNgEBYenOlN6ez7UXGJQ)
+
 ## 🚀 과제 개요
 + 주제 : 주문 관리 시스템
 
