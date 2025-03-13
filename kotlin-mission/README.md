@@ -7,14 +7,12 @@
 + 주제 : 주문 관리 시스템
 
 ## 🛠️ ERD 및 테이블 설계
-+ ERD
-![ERD](https://private-user-images.githubusercontent.com/48613952/421873358-0ee13176-6ebb-438e-8f9d-192e2380f597.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NDE3ODE0MTYsIm5iZiI6MTc0MTc4MTExNiwicGF0aCI6Ii80ODYxMzk1Mi80MjE4NzMzNTgtMGVlMTMxNzYtNmViYi00MzhlLThmOWQtMTkyZTIzODBmNTk3LnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTAzMTIlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwMzEyVDEyMDUxNlomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTYyNDY0ZjQ0OTUzYzEzZjM3MzdkMmJlYjZlMWJmMmM3ZWEzODYxN2EzMzRiMTBlMDdhYTNmZGFhMjkwNWQyMDcmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.dOpvs0MfJVnCFud0bQv-C2LkvqEy_MQ8geh7G74pw2s)
+![ERD](https://cdn.inflearn.com/public/files/posts/47c53bd5-8227-4314-b94e-ab62ba75bcd2/efc5a91c-3c59-4137-89cd-2b57aae5294c.png)
 + 테이블 목록
-    + 주문(TB_ORDER)
-    + 주문상세(TB_ORDER_DETAIL)
-    + 상품(TB_PRODUCT)
-    + 사용자(TB_USER)
-    + 공통코드(TB_CODE)
+    + `TB_ORDER`(주문) : 주문 마스터 정보를 저장하는 테이블
+    + `TB_ORDER_DETAIL`(주문 상세) : 주문 상세 정보를 저장하는 테이블
+    + `TB_PRODUCT`(상품) : 상품 정보를 저장하는 테이블
+    + `TB_CODE`(공통코드) : 코드 및 설명을 저장하는 테이블
 
 ## 📝 API
 
@@ -35,7 +33,6 @@
         "orderNo": 1,
         "orderLineNo": "001",
         "orderSts": 10,
-        "userId": "U001",
         "productCd": "10000",
         "productNm": "테스트상품명1",
         "price": 10000,
@@ -53,7 +50,6 @@
         "orderNo": 1,
         "orderLineNo": "001",
         "orderSts": 10,
-        "userId": "U001",
         "productCd": "10001",
         "productNm": "테스트상품명2",
         "price": 10000,
@@ -76,7 +72,6 @@
 + **Request Body:**
     ```json
     {
-      "userId": "U001",
       "items": [
         {
           "productCd": 10000,
