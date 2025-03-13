@@ -1,8 +1,25 @@
 package com.pej.portfolio_pej.presentation.interceptor
 
-import org.hibernate.annotations.Comment
+import com.pej.portfolio_pej.domain.entity.HttpInterface
+import com.pej.portfolio_pej.domain.repository.HttpInterfaceRepository
+import jakarta.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpServletResponse
 import org.springframework.stereotype.Component
+import org.springframework.web.servlet.HandlerInterceptor
+import java.lang.Exception
 
 @Component
-class PresentationInterceptor {
+class PresentationInterceptor(
+    private val httpInterfaceRepository: HttpInterfaceRepository
+): HandlerInterceptor {
+    override fun afterCompletion(
+        request: HttpServletRequest,
+        response: HttpServletResponse,
+        handler: Any,
+        ex: Exception?
+    ) {
+        //
+        val httpInterface = HttpInterface(request)
+        httpInterfaceRepository.save(httpInterface)
+    }
 }
