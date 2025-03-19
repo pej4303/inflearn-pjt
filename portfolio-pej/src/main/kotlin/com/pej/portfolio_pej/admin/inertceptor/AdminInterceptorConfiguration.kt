@@ -17,6 +17,6 @@ class AdminInterceptorConfiguration(
     override fun addInterceptors(registry: InterceptorRegistry) {
         registry.addInterceptor(adminInterceptor) // 인터셉터 등록
             .addPathPatterns("/admin/**")        // "/admin/**" 경로 요청만 가로챔
-            .excludePathPatterns("/admin/login") // "/admin/login"은 제외
+            .excludePathPatterns("/assets/**", "/css/**" , "/js/**", "h2**")
     }
 }
