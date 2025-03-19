@@ -16,16 +16,17 @@ import org.springframework.web.bind.annotation.RequestMapping
 class AdminIntroductionViewController(private val adminIntroductionService: AdminIntroductionService) {
     @GetMapping
     fun introduction(model: Model): String {
+        // form 요소 셋팅
         val formElement = listOf<FormElementDTO>(
             TextFormElementDTO("content", 4),
             SelectFormElementDTO("isActive", 2, listOf(true.toString(), false.toString()))
         )
         model.addAttribute("formElement", formElement)
-
+        // 테이블 셋팅
         val table = adminIntroductionService.getIntroductionTable()
         model.addAttribute("table", table)
         model.addAttribute("detailTable", null)
-
+        // 페이지 속성 셋팅
         val pageAttributes = mutableMapOf<String, Any>(
             Pair("menuName", "Index"),
             Pair("pageName", table.name),

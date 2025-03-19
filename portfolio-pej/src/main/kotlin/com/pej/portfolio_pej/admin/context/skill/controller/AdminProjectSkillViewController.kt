@@ -1,7 +1,6 @@
 package com.pej.portfolio_pej.admin.context.skill.controller
 
-import com.pej.portfolio_pej.admin.context.link.service.AdminLinkService
-import com.pej.portfolio_pej.admin.context.skill.service.AdminSkillService
+import com.pej.portfolio_pej.admin.context.skill.service.AdminProjectSkillService
 import com.pej.portfolio_pej.admin.data.FormElementDTO
 import com.pej.portfolio_pej.admin.data.SelectFormElementDTO
 import com.pej.portfolio_pej.admin.data.TextFormElementDTO
@@ -12,26 +11,29 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 
 @Controller
-@RequestMapping("/admin/skill")
-class AdminSkillViewController(private val adminSkillService: AdminSkillService) {
+@RequestMapping("/admin/project/skill")
+class AdminProjectSkillViewController(private val adminProjectSkillService: AdminProjectSkillService) {
     @GetMapping
-    fun link(model: Model): String {
+    fun projectSkill(model: Model): String {
+        val projectList = adminProjectSkillService.getProjectList()
+        val skillList = adminProjectSkillService.getSkillList()
+
+        // form 요소 셋팅
         val formElement = listOf<FormElementDTO>(
-            TextFormElementDTO("name", 4),
-            SelectFormElementDTO("type", 2, SkillType.values().map{ it.name }),
-            SelectFormElementDTO("isActive", 2, listOf(true.toString(), false.toString()))
+            SelectFormElementDTO("projectList", 8, projectList),
+            SelectFormElementDTO("skillList", 8, skillList)
         )
         model.addAttribute("formElement", formElement)
-
-        val table = adminSkillService.getSkillTable()
+        // 테이블 셋팅
+        val table = adminProjectSkillService.getProjectSkillTable()
         model.addAttribute("table", table)
         model.addAttribute("detailTable", null)
-
+        // 페이지 속성 셋팅
         val pageAttributes = mutableMapOf<String, Any>(
-            Pair("menuName", "Resume"),
+            Pair("menuName", "Projects"),
             Pair("pageName", table.name),
-            Pair("editable", true),
-            Pair("deletable", false),
+            Pair("editable", false),
+            Pair("deletable", true),
             Pair("hasDetails", false)
         )
         model.addAllAttributes(pageAttributes)
