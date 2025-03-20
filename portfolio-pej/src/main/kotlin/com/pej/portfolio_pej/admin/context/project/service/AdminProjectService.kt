@@ -2,11 +2,11 @@ package com.pej.portfolio_pej.admin.context.project.service
 
 import com.pej.portfolio_pej.admin.context.project.form.ProjectForm
 import com.pej.portfolio_pej.admin.data.TableDTO
-import com.pej.portfolio_pej.admin.exception.AdminBadReqeustException
+import com.pej.portfolio_pej.admin.exception.AdminBadRequestException
 import com.pej.portfolio_pej.domain.entity.Project
 import com.pej.portfolio_pej.domain.entity.ProjectDetail
 import com.pej.portfolio_pej.domain.repository.ProjectRepository
-import jakarta.transaction.Transactional
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.stereotype.Service
 
 @Service
@@ -20,7 +20,7 @@ class AdminProjectService(private val projectRepository: ProjectRepository) {
     fun getProjectDetailTable(id: Long?): TableDTO {
         val classInfo = ProjectDetail::class
         val entities = if (id != null) {
-            projectRepository.findById(id).orElseThrow{ throw AdminBadReqeustException("ID ${id}에 해당하는 데이터를 찾을 수 없습니다.") }.details
+            projectRepository.findById(id).orElseThrow{ throw AdminBadRequestException("ID ${id}에 해당하는 데이터를 찾을 수 없습니다.") }.details
         } else {
             emptyList()
         }
@@ -37,7 +37,7 @@ class AdminProjectService(private val projectRepository: ProjectRepository) {
     }
     @Transactional
     fun update(id:Long, form: ProjectForm) {
-        val project = projectRepository.findById(id).orElseThrow { throw AdminBadReqeustException("ID ${id}에 해당하는 데이터를 찾을 수 없습니다.") }
+        val project = projectRepository.findById(id).orElseThrow { throw AdminBadRequestException("ID ${id}에 해당하는 데이터를 찾을 수 없습니다.") }
 
         project.update(
             name = form.name,

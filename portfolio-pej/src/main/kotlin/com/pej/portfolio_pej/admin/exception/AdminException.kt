@@ -14,11 +14,12 @@ abstract class AdminException(
 /**
  * 사용자 정의 Exception
  */
-class AdminBadReqeustException(message: String): AdminException(
+class AdminBadRequestException(message: String): AdminException(
     httpStatus = HttpStatus.BAD_REQUEST,
     message = message
 )
-class AdminInternalServiceErrorException(message: String): AdminException(
+
+class AdminInternalServerErrorException(message: String): AdminException(
     httpStatus = HttpStatus.INTERNAL_SERVER_ERROR,
     message = message
 )

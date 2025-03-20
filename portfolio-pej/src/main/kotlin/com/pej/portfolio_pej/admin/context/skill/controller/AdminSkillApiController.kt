@@ -1,7 +1,7 @@
 package com.pej.portfolio_pej.admin.context.skill.controller
 
-import com.pej.portfolio_pej.admin.context.link.service.AdminLinkService
 import com.pej.portfolio_pej.admin.context.skill.form.SkillForm
+import com.pej.portfolio_pej.admin.context.skill.service.AdminSkillService
 import com.pej.portfolio_pej.admin.data.*
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/admin/api/skill")
-class AdminSkillApiController(private val adminSkillService:AdminLinkService ) {
+class AdminSkillApiController(private val adminSkillService: AdminSkillService) {
     @PostMapping
     fun postSkill(@RequestBody @Validated form: SkillForm): ResponseEntity<Any> {
         adminSkillService.save(form)

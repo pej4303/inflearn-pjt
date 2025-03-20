@@ -2,7 +2,7 @@ package com.pej.portfolio_pej.admin.context.skill.service
 
 import com.pej.portfolio_pej.admin.context.skill.form.SkillForm
 import com.pej.portfolio_pej.admin.data.TableDTO
-import com.pej.portfolio_pej.admin.exception.AdminBadRequsetException
+import com.pej.portfolio_pej.admin.exception.AdminBadRequestException
 import com.pej.portfolio_pej.domain.constant.SkillType
 import com.pej.portfolio_pej.domain.entity.Skill
 import com.pej.portfolio_pej.domain.repository.SkillRepository
@@ -21,7 +21,7 @@ class AdminSkillService (private val skillRepository: SkillRepository) {
     @Transactional
     fun save(form: SkillForm) {
         val skillType = SkillType.valueOf(form.type)
-        skillRepository.findByNameIgnoreCaseAndType(form.name, skillType).ifPresent{ throw AdminBadRequsetException("중복된 데이터입니다.") }
+        skillRepository.findByNameIgnoreCaseAndType(form.name, skillType).ifPresent{ throw AdminBadRequestException("중복된 데이터입니다.") }
 
         val item = form.toEntity()
         skillRepository.save(item)

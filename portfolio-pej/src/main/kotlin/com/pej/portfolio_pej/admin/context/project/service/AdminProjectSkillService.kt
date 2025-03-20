@@ -1,10 +1,10 @@
-package com.pej.portfolio_pej.admin.context.skill.service
+package com.pej.portfolio_pej.admin.context.project.service
 
-import com.pej.portfolio_pej.admin.context.link.form.LinkForm
-import com.pej.portfolio_pej.admin.context.skill.form.SkillForm
+import com.pej.portfolio_pej.admin.context.project.form.ProjectSkillForm
 import com.pej.portfolio_pej.admin.data.TableDTO
-import com.pej.portfolio_pej.admin.exception.AdminBadRequsetException
-import com.pej.portfolio_pej.domain.constant.SkillType
+import com.pej.portfolio_pej.admin.exception.AdminBadRequestException
+import com.pej.portfolio_pej.admin.exception.AdminInternalServerErrorException
+import com.pej.portfolio_pej.domain.entity.ProjectSkill
 import com.pej.portfolio_pej.domain.repository.ProjectRepository
 import com.pej.portfolio_pej.domain.repository.ProjectSkillRepository
 import com.pej.portfolio_pej.domain.repository.SkillRepository
@@ -42,5 +42,33 @@ class AdminProjectSkillService (private val skillRepository: SkillRepository, pr
     fun getSkillList(): List<String> {
         val skills = skillRepository.findAll()
         return skills.map { "${it.id} (${it.name})" }.toList()
+    }
+    @Transactional
+    fun save(form: ProjectSkillForm) {
+        // 이미 매핑된 Project - Skill 여부 검증
+        val projectId = parseId(form.project)
+        val skillId = parseId(form.skill)
+        projectSkillRepository.findByProjectIdAndSkillId(projectId, skillId).ifPresent { throw AdminBadRequestException("이미 매핑된 데이터입니다.") }
+
+        // 유효한 ProjectSkill 생성
+        val project = projectRepository.findById(projectId).orElseThrow { throw AdminBadRequestException("ID ${projectId}에 해당하는 데이터를 찾을 수 없습니다.") }
+        val skill = skillRepository.findById(skillId).orElseThrow { throw AdminBadRequestException("ID ${skillId}에 해당하는 데이터를 찾을 수 없습니다.") }
+        val projectSkill = ProjectSkill(project = project, skill = skill)
+        // 연관관계 세팅
+        project.skills.add(projectSkill)
+    }
+
+    private fun parseId(line: String): Long {
+        try {
+            val endIndex = line.indexOf(" ") - 1
+            val id = line.slice(0..endIndex).toLong()
+            return id
+        } catch (e: Exception) {
+            throw AdminInternalServerErrorException("ID 추출 중 오류가 발생했습니다.")
+        }
+    }
+
+    fun deleteProjectSkill(id:Long) {
+        projectSkillRepository.deleteById(id)
     }
 }
