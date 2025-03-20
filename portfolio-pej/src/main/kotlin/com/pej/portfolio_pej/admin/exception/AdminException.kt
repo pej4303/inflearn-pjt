@@ -14,7 +14,7 @@ abstract class AdminException(
 /**
  * 사용자 정의 Exception
  */
-class AdminBadRequsetException(message: String): AdminException(
+class AdminBadReqeustException(message: String): AdminException(
     httpStatus = HttpStatus.BAD_REQUEST,
     message = message
 )
