@@ -121,13 +121,15 @@
           "productCd": 10000,
           "price": 10000,
           "qty": 2,
-          "memo": "테스트주문1"
+          "memo": "테스트주문1",
+          "orderSts": 60
         },
         {
           "productCd": 10001,
           "price": 10000,
           "qty": 2,
-          "memo": "테스트주문2"
+          "memo": "테스트주문2",
+          "orderSts": 60
         }
       ]
     }
@@ -150,9 +152,9 @@
     
     {
       "code": 400,
-      "msg": "배송완료 상태여서 변경할 수 없습니다.",
-      "orderNo": "1",
-      "orderSts": "60"
+      "msg": "유효하지 않은 주문 상태 코드입니다. [100]",
+      "orderNo": "",
+      "orderSts": ""
     }
     ```
 
