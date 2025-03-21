@@ -17,14 +17,12 @@
 
 ### 1️⃣ 주문 조회 
 + **URL:** `GET /order`
-+ **설명:** 기간내에 있는 주문을 조회하거나 특정 주문을 조회합니다.
++ **설명:** 특정 주문을 조회합니다.
 + **Request Parameters:**
   | 이름      | 타입    | 필수 여부 | 설명                    |
   |----------|--------|----------|------------------------|
-  | `orderNo`   | String | 선택     | 주문번호 |
-  | `startDt` | String | 필수     | 주문 시작일자  |
-  | `endDt` | String | 선택     | 주문 종료일자(기본값: 현재일자)|
-+ **Request Body:**
+  | `orderNo`   | Long | 필수     | 주문번호 |
++ **Response Body:**
   ```json
   {
     "orderList": [
@@ -42,7 +40,6 @@
         "createdBy": "admin",
         "updatedAt": "2024-03-11T12:00:00Z"
         "updatedBy": "admin",
-        "delYn": "N",
         "memo": "테스트주문1"
       },
       {
@@ -59,7 +56,6 @@
         "createdBy": "admin",
         "updatedAt": "2024-03-11T12:00:00Z"
         "updatedBy": "admin",
-        "delYn": "N",
         "memo": "테스트주문2"
       }
     ]
