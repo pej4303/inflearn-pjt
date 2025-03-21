@@ -1,9 +1,14 @@
 package com.kotlin.kotlin_mission.service
 
+import com.kotlin.kotlin_mission.constant.OrderSts
 import com.kotlin.kotlin_mission.domain.enity.Order
 import com.kotlin.kotlin_mission.domain.enity.OrderDetail
+import com.kotlin.kotlin_mission.dto.OrderDetailDTO
 import com.kotlin.kotlin_mission.dto.RequestDTO
 import com.kotlin.kotlin_mission.dto.ResponseDTO
+import com.kotlin.kotlin_mission.dto.ResponseListDTO
+import com.kotlin.kotlin_mission.exception.ApiException
+import com.kotlin.kotlin_mission.exception.OrderNotFoundException
 import com.kotlin.kotlin_mission.exception.ProductNotFoundException
 import com.kotlin.kotlin_mission.repository.OrderDetailRepository
 import com.kotlin.kotlin_mission.repository.OrderRepository
@@ -16,16 +21,14 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class OrderService(private val orderRepository: OrderRepository, private val orderDetailRepository: OrderDetailRepository, private val productRepository: ProductRepository) {
     @Transactional(readOnly = true)
-    fun getOrderById(orderId: Long): Order {
-        return orderRepository
-                .findById(orderId)
-                .orElseThrow {
-                    NoSuchElementException("주문을 찾을 수 없습니다. 주문 번호: $orderId")
-                }
-    }
+    fun select(orderNo: Long): ResponseEntity<ResponseListDTO<OrderDetailDTO>> {
+        val orderDetail = orderDetailRepository.findByOrderNo(orderNo)
 
-    fun getAllOrders(): List<Order> {
-        return orderRepository.findAll()
+        val response = ResponseListDTO(
+            items = listOf(OrderDetailDTO(orderNo = 1), OrderDetailDTO(orderNo = 1))
+        )
+
+        return ResponseEntity.status(HttpStatus.OK).body(response)
     }
 
     /**
@@ -68,44 +71,56 @@ class OrderService(private val orderRepository: OrderRepository, private val ord
      */
     @Transactional
     fun update(orderNo: Long, requestDTO: RequestDTO): ResponseEntity<ResponseDTO> {
-        // 주문 마스터 조회
-        val orderHeader = orderRepository.findById(orderNo).orElse(null)
-        if (orderHeader == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-                ResponseDTO(
-                    code = 200,
-                    msg = "해당 주문번호의 정보가 존재하지 않습니다.",
-                    orderNo = orderNo,
-                    orderSts = ""
-                )
+        // 주문 마스터
+        val orderHeader = orderRepository.findById(orderNo).orElseThrow {
+            OrderNotFoundException(orderNo) // 주문 정보가 없을 경우 예외 던지기
+        }
+
+        if ("60".equals(orderHeader.orderSts)) {
+            val errorRes = ResponseDTO(
+                code = 400,
+                msg = "배송완료 상태는 수정 할 수 없습니다. [주문번호 : ${orderNo}]",
+                orderNo = null,
+                orderSts = null
             )
-        } else {
-            val orderDetail = orderDetailRepository.findByOrderNo(orderNo)
 
-            requestDTO.items.forEach { item ->
-                val product = productRepository.findById(item.productCd).orElseThrow { RuntimeException("해당 상품코드가 없습니다.: ${item.productCd}") }
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorRes)
+        }
 
-                val updateOrderDetail = orderDetail.find { it.product == product }
+        // 주문 상세
+        val orderDetail = orderDetailRepository.findByOrderNo(orderNo)
 
-                if (updateOrderDetail != null) {
-                    // 기존 주문 상세가 있으면 업데이트
-                    updateOrderDetail.price = item.price
-                    updateOrderDetail.qty = item.qty
-                    updateOrderDetail.memo = item.memo
-                    orderDetailRepository.save(updateOrderDetail) // 업데이트
-                }
+        requestDTO.items.forEach { item ->
+            val product = productRepository.findById(item.productCd).orElseThrow {
+                ProductNotFoundException(item.productCd) // 상품 코드가 없을 경우 예외 던지기
             }
 
-            // 응답 반환
-            val response = ResponseDTO(
-                code = 200,
-                msg = "주문 수정 성공",
-                orderNo = orderNo,
-                orderSts = orderHeader.orderSts
-            )
+            // 주문 상태가 유효한 코드인지 확인하고 적용
+            val orderSts = OrderSts.values().find { it.code == item.orderSts } ?: throw ApiException("유효하지 않은 주문 상태 코드입니다. [주문상태 : ${item.orderSts}]")
 
-            return ResponseEntity.status(HttpStatus.OK).body(response)
+            // 주문 마스터 업데이트
+            orderHeader.orderSts = orderSts.code.toString() // code 값으로 업데이트
+            orderRepository.save(orderHeader) // 주문 상태를 업데이트
+
+            // 주문 상세 업데이트
+            val updateOrderDetail = orderDetail.find { it.product == product }
+            if (updateOrderDetail != null) {
+                updateOrderDetail.price = item.price
+                updateOrderDetail.qty = item.qty
+                updateOrderDetail.memo = item.memo
+                orderDetailRepository.save(updateOrderDetail) // 업데이트
+            }
         }
+
+        // 응답 반환
+        val response = ResponseDTO(
+            code = 200,
+            msg = "주문 수정 성공",
+            orderNo = orderNo,
+            orderSts = orderHeader.orderSts
+        )
+
+        return ResponseEntity.status(HttpStatus.OK).body(response)
     }
 
     /**
@@ -113,6 +128,22 @@ class OrderService(private val orderRepository: OrderRepository, private val ord
      */
     @Transactional
     fun delete(orderNo: Long): ResponseEntity<ResponseDTO> {
+        val orderHeader = orderRepository.findById(orderNo).orElseThrow {
+            OrderNotFoundException(orderNo) // 주문 정보가 없을 경우 예외 던지기
+        }
+
+        val orderSts = orderHeader.orderSts
+        if ("60".equals(orderSts)) {
+            val errorRes = ResponseDTO(
+                code = 400,
+                msg = "배송완료 상태는 삭제 할 수 없습니다. [주문번호 : ${orderNo}]",
+                orderNo = null,
+                orderSts = null
+            )
+
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorRes)
+        }
+
         orderDetailRepository.deleteByOrderNo(orderNo)
         orderRepository.deleteById(orderNo)
 
@@ -120,7 +151,7 @@ class OrderService(private val orderRepository: OrderRepository, private val ord
             code = 200,
             msg = "주문 삭제 성공",
             orderNo = orderNo,
-            orderSts = ""
+            orderSts = null
         )
         return ResponseEntity.status(HttpStatus.OK).body(response)
     }

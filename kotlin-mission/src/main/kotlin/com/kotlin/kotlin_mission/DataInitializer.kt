@@ -22,15 +22,13 @@ class DataInitializer(
         var productList = mutableListOf<Product>(
             Product(
                 productNm = "테스트상품1",
-                productSts = "10",
                 uom = "EA"
             ),
             Product(
                 productNm = "테스트상품2",
-                productSts = "10",
                 uom = "EA"
             )
         )
-         productRepository.saveAll(productList)
+        productRepository.saveAll(productList)
     }
 }

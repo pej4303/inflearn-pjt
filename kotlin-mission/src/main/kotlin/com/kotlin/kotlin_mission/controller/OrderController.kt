@@ -1,6 +1,7 @@
 package com.kotlin.kotlin_mission.controller
 
 import com.kotlin.kotlin_mission.domain.enity.Order
+import com.kotlin.kotlin_mission.domain.enity.OrderDetail
 import com.kotlin.kotlin_mission.dto.RequestDTO
 import com.kotlin.kotlin_mission.dto.ResponseDTO
 import com.kotlin.kotlin_mission.service.OrderService
@@ -12,14 +13,12 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/api/order")
 class OrderController(private val orderService: OrderService) {
-    @GetMapping("/{orderId}")
-    fun getOrderById(@PathVariable orderId: Long): Order {
-        return orderService.getOrderById(orderId)
-    }
-
-    @GetMapping
-    fun getAllOrders(): List<Order> {
-        return orderService.getAllOrders()
+    /**
+     * 주문 조회
+     */
+    @GetMapping("/{orderNo}")
+    fun getOrderById(@PathVariable orderNo: Long): List<OrderDetail> {
+        return orderService.select(orderNo)
     }
 
     /**

@@ -1,6 +1,8 @@
 package com.kotlin.kotlin_mission.advice
 
 import com.kotlin.kotlin_mission.dto.ResponseDTO
+import com.kotlin.kotlin_mission.exception.ApiException
+import com.kotlin.kotlin_mission.exception.OrderNotFoundException
 import com.kotlin.kotlin_mission.exception.ProductNotFoundException
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.MethodArgumentNotValidException
@@ -42,6 +44,34 @@ class ApiControllerAdvice {
         val errorRes = ResponseDTO(
             code = 400,
             msg = errorMsg,
+            orderNo = null,
+            orderSts = null
+        )
+
+        // BAD_REQUEST(400) 상태 코드와 함께 응답 반환
+        return ResponseEntity.badRequest().body(errorRes)
+    }
+
+    @ExceptionHandler(ApiException::class)
+    fun handleException(ex: ApiException): ResponseEntity<ResponseDTO> {
+        // 오류 메시지를 포함한 ResponseDTO 생성
+        val errorRes = ResponseDTO(
+            code = 400,
+            msg = "${ex.message}",
+            orderNo = null,
+            orderSts = null
+        )
+
+        // BAD_REQUEST(400) 상태 코드와 함께 응답 반환
+        return ResponseEntity.badRequest().body(errorRes)
+    }
+
+    @ExceptionHandler(OrderNotFoundException::class)
+    fun handleException(ex: OrderNotFoundException): ResponseEntity<ResponseDTO> {
+        // 오류 메시지를 포함한 ResponseDTO 생성
+        val errorRes = ResponseDTO(
+            code = 400,
+            msg = "${ex.message}",
             orderNo = null,
             orderSts = null
         )
