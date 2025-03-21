@@ -12,20 +12,17 @@
     + `TB_ORDER`(주문) : 주문 마스터 정보를 저장하는 테이블
     + `TB_ORDER_DETAIL`(주문 상세) : 주문 상세 정보를 저장하는 테이블
     + `TB_PRODUCT`(상품) : 상품 정보를 저장하는 테이블
-    + `TB_CODE`(공통코드) : 코드 및 설명을 저장하는 테이블
 
 ## 📝 API
 
 ### 1️⃣ 주문 조회 
 + **URL:** `GET /order`
-+ **설명:** 기간내에 있는 주문을 조회하거나 특정 주문을 조회합니다.
++ **설명:** 특정 주문을 조회합니다.
 + **Request Parameters:**
   | 이름      | 타입    | 필수 여부 | 설명                    |
   |----------|--------|----------|------------------------|
-  | `orderNo`   | String | 선택     | 주문번호 |
-  | `startDt` | String | 필수     | 주문 시작일자  |
-  | `endDt` | String | 선택     | 주문 종료일자(기본값: 현재일자)|
-+ **Request Body:**
+  | `orderNo`   | Long | 필수     | 주문번호 |
++ **Response Body:**
   ```json
   {
     "orderList": [
@@ -43,7 +40,6 @@
         "createdBy": "admin",
         "updatedAt": "2024-03-11T12:00:00Z"
         "updatedBy": "admin",
-        "delYn": "N",
         "memo": "테스트주문1"
       },
       {
@@ -60,7 +56,6 @@
         "createdBy": "admin",
         "updatedAt": "2024-03-11T12:00:00Z"
         "updatedBy": "admin",
-        "delYn": "N",
         "memo": "테스트주문2"
       }
     ]
@@ -99,7 +94,7 @@
     
     {
       "code": 400,
-      "msg": "요청 데이터 오류",
+      "msg": "해당 상품코드가 없습니다. [상품코드 : 1]",
       "orderNo": "",
       "orderSts": ""
     }
@@ -110,8 +105,8 @@
 + **Request Parameters:**
   | 이름      | 타입    | 필수 여부 | 설명                    |
   |----------|--------|----------|------------------------|
-  | `orderNo`   | String | 필수     | 주문번호 |
-  | `items` | Array | 필수     | 변경할 주문정보들(상품코드, 가격, 수량, 메모)  |
+  | `orderNo`   Long | 필수     | 주문번호 |
+  | `items` | Array | 필수     | 변경할 주문정보들(상품코드, 가격, 수량, 메모, 주문상태)  |
 + **Request Body:**
     ```json
     {
@@ -121,13 +116,15 @@
           "productCd": 10000,
           "price": 10000,
           "qty": 2,
-          "memo": "테스트주문1"
+          "memo": "테스트주문1",
+          "orderSts": 60
         },
         {
           "productCd": 10001,
           "price": 10000,
           "qty": 2,
-          "memo": "테스트주문2"
+          "memo": "테스트주문2",
+          "orderSts": 60
         }
       ]
     }
@@ -142,17 +139,24 @@
     }
     
     {
-      "code": 404,
-      "msg": "해당 주문번호의 정보가 존재하지 않습니다.",
+      "code": 400,
+      "msg": "해당 상품코드가 없습니다. [상품코드 : 1]",
       "orderNo": "",
       "orderSts": ""
     }
     
     {
       "code": 400,
-      "msg": "배송완료 상태여서 변경할 수 없습니다.",
-      "orderNo": "1",
-      "orderSts": "60"
+      "msg": "유효하지 않은 주문 상태 코드입니다. [주문상태 : 1]",
+      "orderNo": "",
+      "orderSts": ""
+    }
+
+    {
+      "code": 400,
+      "msg": "배송완료 상태는 수정 할 수 없습니다. [주문번호 : 1]",
+      "orderNo": "",
+      "orderSts": ""
     }
     ```
 
@@ -162,7 +166,7 @@
 + **Request Parameters:**
   | 이름      | 타입    | 필수 여부 | 설명                    |
   |----------|--------|----------|------------------------|
-  | `orderNo`   | String | 필수     | 주문번호 |
+  | `orderNo`   | Long | 필수     | 주문번호 |
 + **Request Body:**
     ```json
     {
@@ -175,20 +179,20 @@
       "code": 200,
       "msg": "주문 삭제 성공",
       "orderNo": 1,
-      "orderSts": "0"
+      "orderSts": ""
     }
     
     {
-      "code": 404,
-      "msg": "해당 주문번호의 정보가 존재하지 않습니다.",
+      "code": 400,
+      "msg": "해당 주문정보가 없습니다. [주문번호 : 10000]",
       "orderNo": "",
       "orderSts": ""
     }
     
     {
       "code": 400,
-      "msg": "배송완료 상태여서 변경할 수 없습니다.",
-      "orderNo": "1",
-      "orderSts": "60"
+      "msg": "배송완료 상태는 삭제 할 수 없습니다. [주문번호 : 1]",
+      "orderNo": "",
+      "orderSts": ""
     }
     ```
