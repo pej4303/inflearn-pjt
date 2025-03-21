@@ -184,7 +184,7 @@
       "code": 200,
       "msg": "주문 삭제 성공",
       "orderNo": 1,
-      "orderSts": "0"
+      "orderSts": ""
     }
     
     {
@@ -197,7 +197,7 @@
     {
       "code": 400,
       "msg": "배송완료 상태는 삭제 할 수 없습니다. [주문번호 : 1]",
-      "orderNo": "1",
-      "orderSts": "60"
+      "orderNo": "",
+      "orderSts": ""
     }
     ```
