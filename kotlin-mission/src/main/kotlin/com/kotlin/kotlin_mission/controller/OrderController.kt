@@ -4,7 +4,9 @@ import com.kotlin.kotlin_mission.domain.enity.Order
 import com.kotlin.kotlin_mission.dto.RequestDTO
 import com.kotlin.kotlin_mission.dto.ResponseDTO
 import com.kotlin.kotlin_mission.service.OrderService
+import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
+import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -24,7 +26,7 @@ class OrderController(private val orderService: OrderService) {
      * 주문 등록
      */
     @PostMapping
-    fun postOrder(@RequestBody requestDTO: RequestDTO): ResponseEntity<ResponseDTO> {
+    fun postOrder(@Valid  @RequestBody requestDTO: RequestDTO): ResponseEntity<ResponseDTO> {
         return orderService.create(requestDTO)
     }
 

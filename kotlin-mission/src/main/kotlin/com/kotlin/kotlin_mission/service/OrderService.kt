@@ -4,6 +4,7 @@ import com.kotlin.kotlin_mission.domain.enity.Order
 import com.kotlin.kotlin_mission.domain.enity.OrderDetail
 import com.kotlin.kotlin_mission.dto.RequestDTO
 import com.kotlin.kotlin_mission.dto.ResponseDTO
+import com.kotlin.kotlin_mission.exception.ProductNotFoundException
 import com.kotlin.kotlin_mission.repository.OrderDetailRepository
 import com.kotlin.kotlin_mission.repository.OrderRepository
 import com.kotlin.kotlin_mission.repository.ProductRepository
@@ -31,67 +32,80 @@ class OrderService(private val orderRepository: OrderRepository, private val ord
      * 주문 생성
      */
     @Transactional
-    fun create(requestDTO: RequestDTO):  ResponseEntity<ResponseDTO> {
-        // 주문 엔티티 생성
+    fun create(requestDTO: RequestDTO): ResponseEntity<ResponseDTO> {
+        // 주문 마스터 생성
         val orderHeader = Order(orderSts = "10")
         orderRepository.save(orderHeader)
 
-        // 주문 항목 처리
-        requestDTO.items.forEach {
-            item ->
-                val product = productRepository.findById(item.productCd).orElseThrow { RuntimeException("해당 상품코드가 없습니다.: ${item.productCd}") }
-                val orderDetail = OrderDetail(
-                    order = orderHeader,
-                    product = product,
-                    price = item.price,
-                    qty = item.qty,
-                    memo = item.memo
-                )
-                orderDetailRepository.save(orderDetail)
+        // 주문 상세 생성
+        requestDTO.items.forEach { item ->
+            val product = productRepository.findById(item.productCd).orElseThrow {
+                ProductNotFoundException(item.productCd) // 상품 코드가 없을 경우 예외 던지기
+            }
+            val orderDetail = OrderDetail(
+                order = orderHeader,
+                product = product,
+                price = item.price,
+                qty = item.qty,
+                memo = item.memo
+            )
+            orderDetailRepository.save(orderDetail)
         }
 
-        var response = ResponseDTO(
+        val response = ResponseDTO(
             code = 200,
             msg = "주문 등록 성공",
             orderNo = orderHeader.orderNo,
-            orderSts = orderHeader.orderSts // 기본적으로 "10"으로 설정 (필요에 따라 변경)
+            orderSts = orderHeader.orderSts
         )
 
         return ResponseEntity.status(HttpStatus.OK).body(response)
     }
+
 
     /**
      * 주문 수정
      */
     @Transactional
     fun update(orderNo: Long, requestDTO: RequestDTO): ResponseEntity<ResponseDTO> {
-        // 주문 조회
-        val orderHeader = orderRepository.findById(orderNo).orElseThrow { RuntimeException("주문이 존재하지 않습니다.: ${orderNo}") }
-        val orderDetail = orderDetailRepository.findByOrderNo(orderNo)
+        // 주문 마스터 조회
+        val orderHeader = orderRepository.findById(orderNo).orElse(null)
+        if (orderHeader == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                ResponseDTO(
+                    code = 200,
+                    msg = "해당 주문번호의 정보가 존재하지 않습니다.",
+                    orderNo = orderNo,
+                    orderSts = ""
+                )
+            )
+        } else {
+            val orderDetail = orderDetailRepository.findByOrderNo(orderNo)
 
-        requestDTO.items.forEach { item ->
-            val product = productRepository.findById(item.productCd).orElseThrow { RuntimeException("해당 상품코드가 없습니다.: ${item.productCd}") }
+            requestDTO.items.forEach { item ->
+                val product = productRepository.findById(item.productCd).orElseThrow { RuntimeException("해당 상품코드가 없습니다.: ${item.productCd}") }
 
-            val updateOrderDetail = orderDetail.find { it.product == product }
+                val updateOrderDetail = orderDetail.find { it.product == product }
 
-            if (updateOrderDetail != null) {
-                // 기존 주문 상세가 있으면 업데이트
-                updateOrderDetail.price = item.price
-                updateOrderDetail.qty = item.qty
-                updateOrderDetail.memo = item.memo
-                orderDetailRepository.save(updateOrderDetail) // 업데이트
+                if (updateOrderDetail != null) {
+                    // 기존 주문 상세가 있으면 업데이트
+                    updateOrderDetail.price = item.price
+                    updateOrderDetail.qty = item.qty
+                    updateOrderDetail.memo = item.memo
+                    orderDetailRepository.save(updateOrderDetail) // 업데이트
+                }
             }
+
+            // 응답 반환
+            val response = ResponseDTO(
+                code = 200,
+                msg = "주문 수정 성공",
+                orderNo = orderNo,
+                orderSts = orderHeader.orderSts
+            )
+
+            return ResponseEntity.status(HttpStatus.OK).body(response)
         }
-
-        // 응답 반환
-        val response = ResponseDTO(
-            code = 200,
-            msg = "주문 수정 성공",
-            orderNo = orderHeader.orderNo,
-            orderSts = orderHeader.orderSts
-        )
-
-        return ResponseEntity.status(HttpStatus.OK).body(response)
     }
 
     /**
