@@ -7,7 +7,7 @@
 + 주제 : 주문 관리 시스템
 
 ## 🛠️ ERD 및 테이블 설계
-![ERD](https://cdn.inflearn.com/public/files/posts/47c53bd5-8227-4314-b94e-ab62ba75bcd2/efc5a91c-3c59-4137-89cd-2b57aae5294c.png)
+![ERD](https://private-user-images.githubusercontent.com/48613952/425731333-7a61fb5f-16d9-4c1b-b65f-84aef7f7fba0.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NDI2MzQ4NTYsIm5iZiI6MTc0MjYzNDU1NiwicGF0aCI6Ii80ODYxMzk1Mi80MjU3MzEzMzMtN2E2MWZiNWYtMTZkOS00YzFiLWI2NWYtODRhZWY3ZjdmYmEwLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTAzMjIlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwMzIyVDA5MDkxNlomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTM3YWQ0MGE5Y2E0MDdjYWEyZDE0MjRhMGUyNTExNGU0MjNhN2MwZDczZDQxNGI5M2JmZWI1NDdjOWQwMDE1MTMmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.JT16UPvIM58azwYoXFATkxcURAqjv52rzZHEzvE8gok)
 + 테이블 목록
     + `TB_ORDER`(주문) : 주문 마스터 정보를 저장하는 테이블
     + `TB_ORDER_DETAIL`(주문 상세) : 주문 상세 정보를 저장하는 테이블
