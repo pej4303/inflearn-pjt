@@ -105,27 +105,27 @@
 + **Request Parameters:**
   | 이름      | 타입    | 필수 여부 | 설명                    |
   |----------|--------|----------|------------------------|
-  | `orderNo`   Long | 필수     | 주문번호 |
-  | `items` | Array | 필수     | 변경할 주문정보들(상품코드, 가격, 수량, 메모, 주문상태)  |
+  | `orderNo` |  Long | 필수     | 주문번호 |
+  | `orderSts` |  Int | 선택     | 주문상태 |
+  | `items` | Array | 필수     | 변경할 주문정보들(상품코드, 가격, 수량, 메모)  |
 + **Request Body:**
     ```json
     {
-      "orderNo": 1,
+      "orderSts": "",
       "items": [
         {
-          "productCd": 10000,
-          "price": 10000,
+          "productCd": 1,
+          "price": 20000,
           "qty": 2,
-          "memo": "테스트주문1",
-          "orderSts": 60
+          "memo": "수정1"
         },
         {
-          "productCd": 10001,
-          "price": 10000,
+          "productCd": 2,
+          "price": 20000,
           "qty": 2,
-          "memo": "테스트주문2",
-          "orderSts": 60
+          "memo": "수정2"
         }
+        
       ]
     }
     ```
