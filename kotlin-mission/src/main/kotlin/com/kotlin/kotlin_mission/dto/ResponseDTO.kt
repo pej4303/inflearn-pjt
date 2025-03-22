@@ -4,5 +4,5 @@ data class ResponseDTO (
     val code: Int,
     val msg: String,
     val orderNo: Long?,
-    val orderSts: String?
+    val orderSts: Int?
 )

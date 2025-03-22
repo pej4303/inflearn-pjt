@@ -26,7 +26,11 @@ class OrderDetail(
     var totalPrice: Int = 0,
 
     @Column(name = "memo")
-    var memo: String?
+    var memo: String?,
+
+    @Column(name = "delYn", length = 10)
+    var delYn: String = "N"        // 삭제구분
+
 ) : BaseEntity() {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

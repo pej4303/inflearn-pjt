@@ -17,4 +17,7 @@ class Product(
 
     @Column(name = "uom", length = 10)
     var uom: String = uom  // 상품 단위
+
+    @Column(name = "delYn", length = 10)
+    var delYn: String = "N"        // 삭제구분
 }

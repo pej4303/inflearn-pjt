@@ -1,23 +1,22 @@
 package com.kotlin.kotlin_mission.controller
 
-import com.kotlin.kotlin_mission.domain.enity.Order
 import com.kotlin.kotlin_mission.domain.enity.OrderDetail
-import com.kotlin.kotlin_mission.dto.RequestDTO
-import com.kotlin.kotlin_mission.dto.ResponseDTO
+import com.kotlin.kotlin_mission.dto.*
 import com.kotlin.kotlin_mission.service.OrderService
 import jakarta.validation.Valid
+import org.slf4j.LoggerFactory
 import org.springframework.http.ResponseEntity
-import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/order")
 class OrderController(private val orderService: OrderService) {
+    val logger = LoggerFactory.getLogger(OrderController::class.java)
     /**
      * 주문 조회
      */
     @GetMapping("/{orderNo}")
-    fun getOrderById(@PathVariable orderNo: Long): List<OrderDetail> {
+    fun getOrderById(@PathVariable orderNo: Long): ResponseEntity<ResponseListDTO<OrderDetail>> {
         return orderService.select(orderNo)
     }
 
@@ -25,7 +24,8 @@ class OrderController(private val orderService: OrderService) {
      * 주문 등록
      */
     @PostMapping
-    fun postOrder(@Valid  @RequestBody requestDTO: RequestDTO): ResponseEntity<ResponseDTO> {
+    fun postOrder(@Valid  @RequestBody requestDTO: RequestCreateDTO): ResponseEntity<ResponseDTO> {
+        logger.debug("### 주문 등록 ###")
         return orderService.create(requestDTO)
     }
 
@@ -33,7 +33,7 @@ class OrderController(private val orderService: OrderService) {
      * 주문 수정
      */
     @PutMapping("/{orderNo}")
-    fun putOrder(@PathVariable orderNo: Long, @RequestBody requestDTO: RequestDTO): ResponseEntity<ResponseDTO> {
+    fun putOrder(@PathVariable orderNo: Long, @RequestBody requestDTO: RequestUpdateDTO): ResponseEntity<ResponseDTO> {
         return orderService.update(orderNo, requestDTO)
     }
 

@@ -11,9 +11,9 @@ data class OrderDetailDTO(
     val qty: Int,
     val vat: Int,
     val totalPrice: Int,
-    val createdDt: LocalDateTime,
+    val createdDt: String,
     val createdBy: String,
-    val updatedAt: LocalDateTime,
+    val updatedAt: String,
     val updatedBy: String,
     val memo: String
 )
