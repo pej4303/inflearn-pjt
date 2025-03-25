@@ -4,13 +4,14 @@ spring:
     open-in-view: false
     show-sql: true
     hibernate:
-     ddl-auto: none
+      ddl-auto: update  # 또는 'none', 'create', 'create-drop'으로 설정
     properties:
       hibernate:
-        format_sql: false
+        format_sql: true  # SQL 쿼리를 보기 좋게 포맷
         # default_batch_fetch_size: 10
   datasource:
     username: root
-    url: jdbc:mysql://mysql:3306/portfolio
-    password: ENC(5Q0kblP/F+yDvz11YgjH+byOIIpu/AuA)
+    url: jdbc:mysql://mysql_portfolio:3306/portfolio  # 컨테이너 이름에 맞게 수정
+    password:
     driver-class-name: com.mysql.cj.jdbc.Driver
+
