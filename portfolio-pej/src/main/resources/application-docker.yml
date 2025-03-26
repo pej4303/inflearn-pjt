@@ -11,7 +11,7 @@ spring:
         # default_batch_fetch_size: 10
   datasource:
     username: root
-    url: jdbc:mysql://mysql_portfolio:3306/portfolio  # 컨테이너 이름에 맞게 수정
-    password:
+    url: jdbc:mysql://mysql:3306/portfolio  # 컨테이너 이름에 맞게 수정
+    password: ENC(Tlw/Heq/cQ5X/dMCE3lNKZNl4dr9fQHB)
     driver-class-name: com.mysql.cj.jdbc.Driver
 
