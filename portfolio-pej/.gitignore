@@ -228,4 +228,5 @@ gradle-app.setting
 docker-compose.yml
 docker-compose-test.yml
 
+
 # End of https://www.toptal.com/developers/gitignore/api/windows,intellij+all,kotlin,gradle,git
