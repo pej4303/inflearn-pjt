@@ -42,134 +42,148 @@ class DataInitializer(
         println("########### 데이터 초기화 ###########")
 
         // achievement 초기화
-        val achievements = mutableListOf<Achievement>(
-            Achievement(
-                title = "2022 Catkao 해커톤 최우수상",
-                description = "고양이 쇼핑몰 검색 서비스의 아키텍처, 데이터 모델링, API 개발 역할 수행",
-                host = "캣카오",
-                achievedDate = LocalDate.of(2022, 8, 1),
-                isActive = true
-            ),
-            Achievement(
-                title = "정보처리기사",
-                description = "자료구조, 운영체제, 알고리즘, 데이터베이스 등",
-                host = "한국산업인력공단",
-                achievedDate = LocalDate.of(2020, 2, 2),
-                isActive = true
-            ),
-        )
-        achievementRepository.saveAll(achievements)
+      val achievements = mutableListOf<Achievement>(
+          Achievement(
+              title = "SQL개발자(SQLD)",
+              description = "데이터베이스",
+              host = "한국데이터베이스진흥센터",
+              achievedDate = LocalDate.of(2022, 4, 1),
+              isActive = true
+          ),
+          Achievement(
+              title = "정보처리기사",
+              description = "자료구조, 운영체제, 알고리즘, 데이터베이스 등",
+              host = "한국산업인력공단",
+              achievedDate = LocalDate.of(2018, 5, 1),
+              isActive = true
+          ),
+          Achievement(
+              title = "정보처리산업기사",
+              description = "자료구조, 운영체제, 알고리즘, 데이터베이스 등",
+              host = "한국산업인력공단",
+              achievedDate = LocalDate.of(2014, 8, 1),
+              isActive = true
+          ),
+      )
+      achievementRepository.saveAll(achievements)
+      
+      // introduction 초기화
+      val introductions = mutableListOf<Introduction>(
+          Introduction(content = "꾸준함이 무기인 개발자입니다.", isActive = true),
+          Introduction(content = "다양한 프로젝트를 경험했고 특히 레거시한 프로젝트에 익숙합니다.", isActive = true),
+          Introduction(content = "변화하는 기술 환경에 대응하기 위해 정기적으로 스터디 모임을 진행하고 있습니다.", isActive = true)
+      )
+      introductionRepository.saveAll(introductions)
+      
+      // link 초기화
+      val links = mutableListOf<Link>(
+          Link(name = "Github", content = "https://github.com/pej4303", isActive = true),
+          Link(name = "Github", content = "https://github.com/ISFX-Study",isActive = true),
+      )
+      linkRepository.saveAll(links)
+      
+      // experience / experience_detail 초기화
+      val experience1 = Experience(
+          title = "한양여자대학교",
+          description = "컴퓨터정보과",
+          startYear = 2012,
+          startMonth = 3,
+          endYear = 2015,
+          endMonth = 3,
+          isActive = true,
+      )
+      experience1.addDetails(
+          mutableListOf(
+              ExperienceDetail(content = "", isActive = true)
+          )
+      )
+      val experience2 = Experience(
+          title = "한양사이버대학교",
+          description = "컴퓨터공학과",
+          startYear = 2015,
+          startMonth = 9,
+          endYear = 2017,
+          endMonth = 8,
+          isActive = true,
+      )
+      experience2.addDetails(
+          mutableListOf(
+              ExperienceDetail(content = "", isActive = true)
+          )
+      )
+      val experience3 = Experience(
+          title = "(주)이루다컴",
+          description = "Biz2팀",
+          startYear = 2016,
+          startMonth = 5,
+          endYear = 2024,
+          endMonth = 9,
+          isActive = true,
+      )
+      experience3.addDetails(
+          mutableListOf(
+              ExperienceDetail(content = "MRO솔루션 및 SI 프로젝트 개발", isActive = true),
+              ExperienceDetail(content = "2020년도 최우수사원상 수상", isActive = true)
+          )
+      )
+      experienceRepository.saveAll(mutableListOf(experience1, experience2, experience3))
+      
+      // skill 초기화
+      val java = Skill(name = "Java", type = SkillType.LANGUAGE.name, isActive = true)
+      val spring = Skill(name = "Spring", type = SkillType.FRAMEWORK.name, isActive = true)
+      val oracle = Skill(name = "Oracle", type = SkillType.DATABASE.name, isActive = true)
+      val tibero = Skill(name = "Tibero", type = SkillType.DATABASE.name, isActive = true)
+      
+      skillRepository.saveAll(mutableListOf(java, spring))
+      
+      // project / project_detail / project_skill 초기화
+      val project1 = Project(
+          name = "대한통운 TCS 운영",
+          description = "대한통운 TCS 운영",
+          startYear = 2025,
+          startMonth = 2,
+          endYear = null,
+          endMonth = null,
+          isActive = true
+      )
+      project1.addDetails(
+          mutableListOf(
+              ProjectDetail(content = "Single Visibility 신규 고객사 기능 개발", url = null, isActive = true),
+              ProjectDetail(content = "FTP 인터페이스 개선 작업(Python -> Java)", url = null, isActive = true)
+          )
+      )
+      project1.skills.addAll(
+          mutableListOf(
+              ProjectSkill(project = project1, skill = java),
+              ProjectSkill(project = project1, skill = spring),
+              ProjectSkill(project = project1, skill = oracle)
+          )
+      )
+      val project2 = Project(
+          name = "큐로직 GPO 구매시스템 구축",
+          description = "큐로직 GPO 구매시스템",
+          startYear = 2023,
+          startMonth = 5,
+          endYear = 2023,
+          endMonth = 8,
+          isActive = true
+      )
+      project2.addDetails(
+          mutableListOf(
+              ProjectDetail(content = "관리자 주문 조회, 수정 및 반품 기능을 구현", url = null, isActive = true),
+              ProjectDetail(content = "빌게이트 PG사를 이용하여 결제 처리 및 취소 기능을 구현", url = null, isActive = true),
+              ProjectDetail(content = "EAI 및 RestAPI를 활용하여 유형별 주문 등록 인터페이스, 주문 반품 인터페이스 구현", url = null, isActive = true),
+              ProjectDetail(content = "Quartz를 이용하여 배치 구현", url = null, isActive = true)
+          )
+      )
+      project2.skills.addAll(
+          mutableListOf(
+              ProjectSkill(project = project2, skill = java),
+              ProjectSkill(project = project2, skill = spring),
+              ProjectSkill(project = project2, skill = tibero)
+          )
+      )
+      projectRepository.saveAll(mutableListOf(project1, project2))
 
-        // introduction 초기화
-        val introductions = mutableListOf<Introduction>(
-            Introduction(content = "주도적으로 문제를 찾고, 해결하는 고양이입니다.", isActive = true),
-            Introduction(content = "기술을 위한 기술이 아닌, 비즈니스 문제를 풀기 위한 기술을 추구합니다.",
-                isActive = true),
-            Introduction(content = "기존 소스를 리팩토링하여 더 좋은 구조로 개선하는 작업을 좋아합니다.",
-                isActive = true)
-        )
-        introductionRepository.saveAll(introductions)
-        // link 초기화
-        val links = mutableListOf<Link>(
-            Link(name = "Github", content = "https://github.com/infomuscle", isActive = true),
-            Link(name = "Linkedin", content = "https://www.linkedin.com/in/bokeunjeong",
-                isActive = true),
-        )
-        linkRepository.saveAll(links)
-
-        // experience / experience_detail 초기화
-        val experience1 = Experience(
-            title = "캣홀릭대학교(CatHolic Univ.)",
-            description = "컴퓨터공학 전공",
-            startYear = 2018,
-            startMonth = 9,
-            endYear = 2022,
-            endMonth = 8,
-            isActive = true,
-        )
-        experience1.addDetails(
-            mutableListOf(
-                ExperienceDetail(content = "GPA 4.3/4.5", isActive = true),
-                ExperienceDetail(content = "소프트웨어 연구 학회 활동", isActive = true)
-            )
-        )
-        val experience2 = Experience(
-            title = "주식회사 캣카오(Catkao Corp.)",
-            description = "소셜서비스팀 백엔드 개발자",
-            startYear = 2022,
-            startMonth = 9,
-            endYear = null,
-            endMonth = null,
-            isActive = true,
-        )
-        experience2.addDetails(
-            mutableListOf(
-                ExperienceDetail(content = "유기묘 위치 공유 서비스 개발", isActive = true),
-                ExperienceDetail(content = "신입 교육 프로그램 우수상 수상", isActive = true)
-            )
-        )
-        experienceRepository.saveAll(mutableListOf(experience1, experience2))
-
-        // skill 초기화
-        val java = Skill(name = "Java", type = SkillType.LANGUAGE.name, isActive = true)
-        val kotlin = Skill(name = "Kotlin", type = SkillType.LANGUAGE.name, isActive = true)
-        val python = Skill(name = "Python", type = SkillType.LANGUAGE.name, isActive = true)
-        val spring = Skill(name = "Spring", type = SkillType.FRAMEWORK.name, isActive = true)
-        val django = Skill(name = "Django", type = SkillType.FRAMEWORK.name, isActive = true)
-        val mysql = Skill(name = "MySQL", type = SkillType.DATABASE.name, isActive = true)
-        val redis = Skill(name = "Redis", type = SkillType.DATABASE.name, isActive = true)
-        val kafka = Skill(name = "Kafka", type = SkillType.TOOL.name, isActive = true)
-        skillRepository.saveAll(mutableListOf(java, kotlin, python, spring, django, mysql, redis, kafka))
-
-        // project / project_detail / project_skill 초기화
-        val project1 = Project(
-            name = "유기묘 발견 정보 공유 서비스",
-            description = "유기묘 위치의 실시간 공유, 임시보호까지 연결해주는 서비스. 구글 맵스를 연동하여 유기묘 위치 정보를 직관적으로 파악할 수 있도록 하는 사용자 경험 개선 작업.",
-            startYear = 2022,
-            startMonth = 9,
-            endYear = 2022,
-            endMonth = 12,
-            isActive = true
-        )
-        project1.addDetails(
-            mutableListOf(
-                ProjectDetail(content = "구글 맵스를 활용한 유기묘 발견 지역 정보 제공 API 개발", url =
-                null, isActive = true),
-                ProjectDetail(content = "Redis 적용하여 인기 게시글의 조회 속도 1.5초 → 0.5초로 개선", url
-                = null, isActive = true)
-            )
-        )
-        project1.skills.addAll(
-            mutableListOf(
-                ProjectSkill(project = project1, skill = java),
-                ProjectSkill(project = project1, skill = spring),
-                ProjectSkill(project = project1, skill = mysql),
-                ProjectSkill(project = project1, skill = redis)
-            )
-        )
-        val project2 = Project(
-            name = "반려동물 홈 카메라 움직임 감지 분석 모듈",
-            description = "카메라에서 서버로 전달되는 신호를 분석하여 움직임이 감지될 경우 클라이언트에게 알림 발송 작업.",
-            startYear = 2022,
-            startMonth = 12,
-            endYear = null,
-            endMonth = null,
-            isActive = true
-        )
-        project2.addDetails(
-            mutableListOf(
-                ProjectDetail(content = "PIL(Pillow) 활용하여 이미지 분석 기능 개발", url = null, isActive = true),
-                ProjectDetail(content = "알림 발송을 비동기 처리하여 이미지 분석 - 알림 발송 기능간 의존도 감소", url = null, isActive = true),
-                ProjectDetail(content = "Github Repository", url = "https://github.com/infomuscle", isActive = true)
-            )
-        )
-        project2.skills.addAll(
-            mutableListOf(
-                ProjectSkill(project = project2, skill = python),
-                ProjectSkill(project = project2, skill = django),
-                ProjectSkill(project = project2, skill = kafka)
-            )
-        )
-        projectRepository.saveAll(mutableListOf(project1, project2))
     }
 }
