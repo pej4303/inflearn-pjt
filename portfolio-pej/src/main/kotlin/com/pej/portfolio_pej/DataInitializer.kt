@@ -133,8 +133,8 @@ class DataInitializer(
       val spring = Skill(name = "Spring", type = SkillType.FRAMEWORK.name, isActive = true)
       val oracle = Skill(name = "Oracle", type = SkillType.DATABASE.name, isActive = true)
       val tibero = Skill(name = "Tibero", type = SkillType.DATABASE.name, isActive = true)
-      
-      skillRepository.saveAll(mutableListOf(java, spring))
+
+      skillRepository.saveAll(mutableListOf(java, spring, oracle, tibero))
       
       // project / project_detail / project_skill 초기화
       val project1 = Project(
