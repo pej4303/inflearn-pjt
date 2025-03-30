@@ -4,7 +4,7 @@ spring:
     open-in-view: false
     show-sql: true
     hibernate:
-      ddl-auto: update  # 또는 'none', 'create', 'create-drop'으로 설정
+      ddl-auto: create  # 또는 'none', 'create', 'create-drop'으로 설정
     properties:
       hibernate:
         format_sql: true  # SQL 쿼리를 보기 좋게 포맷

@@ -15,7 +15,7 @@ import java.time.LocalDate
  * 하지만 특정 패키지만 스캔하고 싶다면 @Component을 명시적으로 사용할 수 있다.
  */
 @Component
-@Profile(value = ["default"])  // "default" 프로파일이 활성화될 때만 빈 등록한다.
+@Profile(value = ["default", "docker"])  // "default"나 "docker" 프로파일이 활성화될 때 빈 등록
 class DataInitializer(
       // val : final 변수
       private val achievementRepository: AchievementRepository
@@ -45,23 +45,23 @@ class DataInitializer(
       val achievements = mutableListOf<Achievement>(
           Achievement(
               title = "SQL개발자(SQLD)",
-              description = "데이터베이스",
-              host = "한국데이터베이스진흥센터",
+              description = "한국데이터베이스진흥센터",
+              host = "",
               achievedDate = LocalDate.of(2022, 4, 1),
               isActive = true
           ),
           Achievement(
               title = "정보처리기사",
-              description = "자료구조, 운영체제, 알고리즘, 데이터베이스 등",
-              host = "한국산업인력공단",
-              achievedDate = LocalDate.of(2018, 5, 1),
+              description = "한국산업인력공단",
+              host = "",
+              achievedDate = LocalDate.of(2018, 5, 25),
               isActive = true
           ),
           Achievement(
               title = "정보처리산업기사",
-              description = "자료구조, 운영체제, 알고리즘, 데이터베이스 등",
-              host = "한국산업인력공단",
-              achievedDate = LocalDate.of(2014, 8, 1),
+              description = "한국산업인력공단",
+              host = "",
+              achievedDate = LocalDate.of(2014, 8, 22),
               isActive = true
           ),
       )
@@ -71,7 +71,7 @@ class DataInitializer(
       val introductions = mutableListOf<Introduction>(
           Introduction(content = "꾸준함이 무기인 개발자입니다.", isActive = true),
           Introduction(content = "다양한 프로젝트를 경험했고 특히 레거시한 프로젝트에 익숙합니다.", isActive = true),
-          Introduction(content = "변화하는 기술 환경에 대응하기 위해 정기적으로 스터디 모임을 진행하고 있습니다.", isActive = true)
+          Introduction(content = "새로운 기술이나 지식을 습득하는 것을 좋아해서 정기적인 스터디 모임을 주도하고 있습니다.", isActive = true)
       )
       introductionRepository.saveAll(introductions)
       
@@ -85,21 +85,21 @@ class DataInitializer(
       // experience / experience_detail 초기화
       val experience1 = Experience(
           title = "한양여자대학교",
-          description = "컴퓨터정보과",
+          description = "",
           startYear = 2012,
           startMonth = 3,
           endYear = 2015,
-          endMonth = 3,
+          endMonth = 2,
           isActive = true,
       )
       experience1.addDetails(
           mutableListOf(
-              ExperienceDetail(content = "", isActive = true)
+              ExperienceDetail(content = "컴퓨터정보과", isActive = true)
           )
       )
       val experience2 = Experience(
           title = "한양사이버대학교",
-          description = "컴퓨터공학과",
+          description = "",
           startYear = 2015,
           startMonth = 9,
           endYear = 2017,
@@ -108,12 +108,12 @@ class DataInitializer(
       )
       experience2.addDetails(
           mutableListOf(
-              ExperienceDetail(content = "", isActive = true)
+              ExperienceDetail(content = "컴퓨터공학과", isActive = true)
           )
       )
       val experience3 = Experience(
           title = "(주)이루다컴",
-          description = "Biz2팀",
+          description = "",
           startYear = 2016,
           startMonth = 5,
           endYear = 2024,
@@ -139,7 +139,7 @@ class DataInitializer(
       // project / project_detail / project_skill 초기화
       val project1 = Project(
           name = "대한통운 TCS 운영",
-          description = "대한통운 TCS 운영",
+          description = "",
           startYear = 2025,
           startMonth = 2,
           endYear = null,
@@ -161,7 +161,7 @@ class DataInitializer(
       )
       val project2 = Project(
           name = "큐로직 GPO 구매시스템 구축",
-          description = "큐로직 GPO 구매시스템",
+          description = "",
           startYear = 2023,
           startMonth = 5,
           endYear = 2023,
