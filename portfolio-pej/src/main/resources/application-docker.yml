@@ -12,6 +12,5 @@ spring:
   datasource:
     username: root
     url: jdbc:mysql://mysql:3306/portfolio  # 컨테이너 이름에 맞게 수정
-    password: ENC(Tlw/Heq/cQ5X/dMCE3lNKZNl4dr9fQHB)
+    password: ENC(4HMh20Ry1zmWkrzAz3JNdsdueY0LORpr)
     driver-class-name: com.mysql.cj.jdbc.Driver
-

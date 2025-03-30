@@ -11,6 +11,4 @@ class PortfolioPejApplicationTests {
 	@Test
 	fun contextLoads() {
 	}
-
-
 }
