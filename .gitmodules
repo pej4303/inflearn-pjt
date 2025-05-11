@@ -1,0 +1,3 @@
+[submodule "kuke-board"]
+	path = kuke-board
+	url = https://github.com/pej4303/kuke-board.git
