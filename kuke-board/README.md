@@ -24,22 +24,22 @@ kuke-board/
 
 ## 🚀 기술 스택
 
-### Backend
+### ✅ Backend
 + Java 21
 + Spring Boot 3.4.5
 + Spring Data JPA
 
-### Database
+### ✅ Database
 + Oracle 21c
 + Redis
 
-### Test
+### ✅ Test
 + JUnit 5 (with Spring Boot Test)
 
-### Infra & DevOps
+### ✅ Infra & DevOps
 + Docker
 
-### ETC & Tools
+### ✅ ETC & Tools
 + Lombok
 + IntelliJ IDEA 2025.1.1.1
 + Snowflake ID Generator (분산 ID 생성)
