@@ -53,6 +53,7 @@ public class ArticleController {
      * 게시글 삭제
      * @param articleId
      */
+    @DeleteMapping("/v1/article/{articleId}")
     public void remove(@PathVariable Long articleId) {
         articleService.remove(articleId);
     }
