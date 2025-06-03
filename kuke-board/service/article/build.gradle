@@ -6,4 +6,7 @@ dependencies {
     implementation project(':common:snowflake')
 //    implementation project(':common:outbox-message-relay')
 //    implementation project(':common:event')
+
+    // Jasypt 추가
+    implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5'
 }
