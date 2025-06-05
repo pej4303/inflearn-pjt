@@ -4,6 +4,7 @@ import kuke.board.article.entity.Article;
 import kuke.board.article.repository.ArticleRepository;
 import kuke.board.article.service.request.ArticleCreateRequest;
 import kuke.board.article.service.request.ArticleUpdateRequest;
+import kuke.board.article.service.response.ArticlePageResponse;
 import kuke.board.article.service.response.ArticleResponse;
 import kuke.board.common.snowflake.Snowflake;
 import lombok.RequiredArgsConstructor;
@@ -93,5 +94,19 @@ public class ArticleService {
          *    - 삭제(Delete) → 단순히 “지워라”는 명령형 행위이기 때문에, 보통 결과를 반환하지 않음
          */
         articleRepository.deleteById(articleId);
+    }
+
+    /**
+     * 페이징 조회
+     * @param boardId
+     * @param page
+     * @param pageSize
+     * @return
+     */
+    public ArticlePageResponse searchAll(Long boardId, Long page, Long pageSize) {
+        return ArticlePageResponse.of(
+                articleRepository.findAll(boardId, (page - 1) * pageSize, pageSize).stream().map(ArticleResponse::from).toList(),
+                articleRepository.count(boardId, PageCalculator.calculatePageLimit(page, pageSize, 10L))
+        );
     }
 }

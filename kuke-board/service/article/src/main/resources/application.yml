@@ -17,3 +17,6 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: none
+jasypt:
+  encryptor:
+    password: "1q2w3e4r"  # 암호화 키, 공백이 있으면 반드시 따옴표로 감싸기

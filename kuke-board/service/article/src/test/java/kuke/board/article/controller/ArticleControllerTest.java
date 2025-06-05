@@ -5,13 +5,16 @@ import kuke.board.article.entity.Article;
 import kuke.board.article.service.ArticleService;
 import kuke.board.article.service.request.ArticleCreateRequest;
 import kuke.board.article.service.request.ArticleUpdateRequest;
+import kuke.board.article.service.response.ArticlePageResponse;
 import kuke.board.article.service.response.ArticleResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -22,15 +25,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.springframework.web.client.RestClient;
+
 import static org.mockito.ArgumentMatchers.any;
 
+@Slf4j
 @SpringBootTest  // 스프링 컨테이너를 로딩하여 통합 테스트를 수행
 @AutoConfigureMockMvc  // MockMvc를 자동으로 설정해준다. 웹 계층 테스트 시 사용
 class ArticleControllerTest {
-
-    private static final Logger log = LogManager.getLogger(ArticleControllerTest.class);
 
     @Autowired
     private MockMvc mockMvc;  // MockMvc: 실제 서블릿 컨테이너 없이 MVC 테스트 수행용 객체
@@ -40,6 +42,8 @@ class ArticleControllerTest {
 
     @Autowired
     private ObjectMapper objectMapper;  // JSON 변환용 (객체 <-> JSON)
+
+    RestClient restClient = RestClient.create("http://localhost:9000");
 
     @Test
     @DisplayName("게시글 조회 테스트")
@@ -59,6 +63,18 @@ class ArticleControllerTest {
                 .andExpect(status().isOk())  // HTTP 200 OK 기대
                 .andExpect(jsonPath("$.title").value("제목1"))  // 응답 JSON에서 title 값 검증
                 .andExpect(jsonPath("$.content").value("내용1")); // 응답 JSON에서 content 값 검증
+    }
+
+    @Test
+    @DisplayName("게시글 페이징 조회 테스트")
+    void searchAll() throws Exception {
+        ArticlePageResponse response = restClient.get()
+                .uri("/v1/article?boardId=1&pageSize=30&page=1")
+                .retrieve()
+                .body(ArticlePageResponse.class);
+
+        log.info("getArticleCount = {}", response.getArticleCount());
+
     }
 
     @Test

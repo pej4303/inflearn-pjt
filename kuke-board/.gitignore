@@ -28,7 +28,6 @@ out/
 
 # 테스트 코드 제외
 /src/test/java/kuke/board/article/config/JasyptEncryptorTest.java
-application-local.yml
 
 ### NetBeans ###
 /nbproject/private/
