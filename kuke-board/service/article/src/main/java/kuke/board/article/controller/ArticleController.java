@@ -8,6 +8,8 @@ import kuke.board.article.service.response.ArticleResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 public class ArticleController {
@@ -38,8 +40,25 @@ public class ArticleController {
      * @return         게시글 목록과 페이징 정보가 포함된 응답 객체
      */
     @GetMapping("/v1/article")
-    public ArticlePageResponse searchAll(@RequestParam("boardId") Long boardId, @RequestParam("page") Long page, @RequestParam("pageSize") Long pageSize) {
+    public ArticlePageResponse searchAll(@RequestParam("boardId") Long boardId,
+                                         @RequestParam("page") Long page,
+                                         @RequestParam("pageSize") Long pageSize) {
         return articleService.searchAll(boardId, page, pageSize);
+    }
+
+    /**
+     * 게시글 페이징 조회 - 무한 스크롤 방식
+     *
+     * @param boardId  게시판 ID (조회할 게시판을 지정)
+     * @param pageSize 한 페이지에 조회할 게시글 수
+     * @param lastArticleId  최근 조회된 ArticleID
+     * @return         게시글 목록과 페이징 정보가 포함된 응답 객체
+     */
+    @GetMapping("/v1/article/scroll")
+    public List<ArticleResponse> searchAllScroll(@RequestParam("boardId") Long boardId,
+                                                 @RequestParam("pageSize") Long pageSize,
+                                                 @RequestParam(value = "lastArticleId", required = false) Long lastArticleId) {
+        return articleService.searchAllScroll(boardId, pageSize, lastArticleId);
     }
 
     /**

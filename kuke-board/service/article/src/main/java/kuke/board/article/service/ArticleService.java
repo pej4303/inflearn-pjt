@@ -11,6 +11,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 /**
  * Q. @RequiredArgsConstructor ?
@@ -108,5 +111,24 @@ public class ArticleService {
                 articleRepository.findAll(boardId, (page - 1) * pageSize, pageSize).stream().map(ArticleResponse::from).toList(),
                 articleRepository.count(boardId, PageCalculator.calculatePageLimit(page, pageSize, 10L))
         );
+    }
+
+    /**
+     * 무한 스크롤 조회
+     * @param boardId
+     * @param pageSize
+     * @param lastArticleId
+     * @return
+     */
+    public List<ArticleResponse> searchAllScroll(Long boardId, Long pageSize, Long lastArticleId) {
+        List<Article> list = null;
+
+        if (lastArticleId == null) {
+            list = articleRepository.findAllInitScroll(boardId, pageSize);
+        } else {
+            list = articleRepository.findAllScroll(boardId, pageSize, lastArticleId);
+        }
+
+        return list.stream().map(ArticleResponse::from).toList();
     }
 }

@@ -72,4 +72,62 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
             "      ) T",
             nativeQuery = true)
     Long count(@Param("boardId") Long boardId, @Param("limit") Long limit);
+
+    /**
+     * 무한 스크롤 초기 조회
+     * @param boardId
+     * @param limit
+     * @return
+     */
+    @Query(
+            value = "SELECT A.ARTICLE_ID\n" +
+                    "     , A.TITLE\n" +
+                    "     , A.CONTENT\n" +
+                    "     , A.BOARD_ID\n" +
+                    "     , A.WRITER_ID\n" +
+                    "     , A.CREATED_AT\n" +
+                    "     , A.MODIFIED_AT\n" +
+                    "  FROM TB_ARTICLE A \n" +
+                    " WHERE A.BOARD_ID = :boardId\n" +
+                    " ORDER BY A.ARTICLE_ID DESC\n" +
+                    " FETCH NEXT :limit ROWS ONLY\n" ,
+            nativeQuery = true
+    )
+    List<Article> findAllInitScroll(
+            @Param("boardId") Long boardId, // 게시판 ID
+            @Param("limit") Long limit      // 조회할 글 수 (페이징용)
+    );
+
+    /**
+     * 무한 스크롤 조회
+     *
+     * DESC 정렬이면 → id < lastId
+     * ASC 정렬이면 → id > lastId
+     *
+     * @param boardId
+     * @param limit
+     * @param lastId
+     * @return
+     */
+    @Query(
+            value = "SELECT A.ARTICLE_ID\n" +
+                    "     , A.TITLE\n" +
+                    "     , A.CONTENT\n" +
+                    "     , A.BOARD_ID\n" +
+                    "     , A.WRITER_ID\n" +
+                    "     , A.CREATED_AT\n" +
+                    "     , A.MODIFIED_AT\n" +
+                    "  FROM TB_ARTICLE A \n" +
+                    " WHERE A.BOARD_ID = :boardId\n" +
+                    "   AND A.ARTICLE_ID < :lastId\n" +
+                    " ORDER BY A.ARTICLE_ID DESC\n" +
+                    " FETCH NEXT :limit ROWS ONLY\n" ,
+            nativeQuery = true
+    )
+    List<Article> findAllScroll(
+            @Param("boardId") Long boardId,  // 게시판 ID
+            @Param("limit") Long limit,      // 조회할 글 수 (페이징용)
+            @Param("lastId") Long lastId     // 최근 조회된 ARTICLE_ID
+
+    );
 }

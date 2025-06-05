@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -26,6 +27,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import org.springframework.web.client.RestClient;
+
+import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 
@@ -67,7 +70,7 @@ class ArticleControllerTest {
 
     @Test
     @DisplayName("게시글 페이징 조회 테스트")
-    void searchAll() throws Exception {
+    void searchAll()  {
         ArticlePageResponse response = restClient.get()
                 .uri("/v1/article?boardId=1&pageSize=30&page=1")
                 .retrieve()
@@ -75,6 +78,27 @@ class ArticleControllerTest {
 
         log.info("getArticleCount = {}", response.getArticleCount());
 
+    }
+
+    @Test
+    @DisplayName("게시글 페이징 조회 테스트 - 무한 스크롤")
+    void searchAllScroll()  {
+         List<ArticleResponse> response = restClient.get()
+                .uri("/v1/article/scroll?boardId=1&pageSize=5")
+                .retrieve()
+                .body(new ParameterizedTypeReference<List<ArticleResponse>>() {
+                });
+
+         log.info("첫번째 페이지 = {}", response.getLast().getArticleId());
+
+         Long lastId = response.getLast().getArticleId();
+
+         List<ArticleResponse> response2 = restClient.get()
+                .uri("/v1/article/scroll?boardId=1&pageSize=5&lastArticleId=%s".formatted(lastId))
+                .retrieve()
+                .body(new ParameterizedTypeReference<List<ArticleResponse>>() {
+                });
+         response2.stream().forEach(i -> log.info("getArticleId = {}", i.getArticleId()));
     }
 
     @Test
