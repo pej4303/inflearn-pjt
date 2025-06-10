@@ -28,6 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import org.springframework.web.client.RestClient;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -47,6 +48,13 @@ class ArticleControllerTest {
     private ObjectMapper objectMapper;  // JSON 변환용 (객체 <-> JSON)
 
     RestClient restClient = RestClient.create("http://localhost:9000");
+
+
+    @Test
+    void test() {
+        LocalDate localDate = LocalDate.of(2025, 6, 9);
+        log.info("getDayOfMonth() = {}", localDate.getDayOfMonth());
+    }
 
     @Test
     @DisplayName("게시글 조회 테스트")

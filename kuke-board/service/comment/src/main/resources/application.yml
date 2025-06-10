@@ -1,1 +1,22 @@
-server.port: 9001
+server:
+  port: 9001
+
+spring:
+  application:
+    name: kuke-board-comment-service
+
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1521/xe
+    username: ENC(UFQeqTye1HXbE/hmxLhWOQ==)
+    password: ENC(mDdrvWKtgc8b5ACRa6jdTw==)
+
+  jpa:
+    database-platform: org.hibernate.dialect.OracleDialect
+    open-in-view: false
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+jasypt:
+  encryptor:
+    password: ${JASYPT_ENCRYPTOR_PASSWORD}
