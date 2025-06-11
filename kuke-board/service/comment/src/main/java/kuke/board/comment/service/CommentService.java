@@ -54,7 +54,8 @@ public class CommentService {
     public void remove(Long commentId) {
         // 하위 댓글이 있으면 삭제 할 수 없음
         commentRepository.findById(commentId)
-                .filter(comment -> "N".equalsIgnoreCase(comment.getDelYn())) // 삭제 안 된 경우만
+                // 삭제 안 된 경우만
+                .filter(not(Comment::isDelYn))
                 .ifPresent(comment -> {
                     if (hasChildren(comment)) {
                         comment.delete();
@@ -75,7 +76,7 @@ public class CommentService {
         if (!comment.isRoot()) {
             // 상위 댓글 찾기
             commentRepository.findById(comment.getParentCommentId())
-                    .filter(item -> "Y".equalsIgnoreCase(item.getDelYn()))  // 삭제 되어있는지
+                    .filter(Comment::isDelYn)  // 삭제 되어있는지
                     .filter(not(this::hasChildren)) // 자식이 없어야 함
                     .ifPresent(this::remove);
         }
@@ -104,12 +105,10 @@ public class CommentService {
         } else {
             // 현재 댓글은 2뎁스만 작성 가능하기 때문에
             return commentRepository.findById(parentCommentId)
-                    .filter(comment -> "N".equalsIgnoreCase(comment.getDelYn())) // 삭제 안 된 경우만
-                    .filter(Comment::isRoot)                                     // 루트 댓글인 경우만
+                    .filter(not(Comment::isDelYn)) // 삭제 안 된 경우만
+                    .filter(Comment::isRoot)        // 루트 댓글인 경우만
                     .orElseThrow();
-
         }
-
     }
 }
 

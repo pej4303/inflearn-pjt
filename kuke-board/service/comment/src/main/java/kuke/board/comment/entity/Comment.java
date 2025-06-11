@@ -1,9 +1,7 @@
 package kuke.board.comment.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import kuke.board.comment.convert.BooleanYNConverter;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,28 +21,29 @@ import java.time.LocalDateTime;
 public class Comment {
     @Id
     @Column(name = "COMMENT_ID")
-    private Long commentId;
+    private Long commentId; // 댓글ID
 
     @Column(name = "CONTENT", nullable = false, length = 3000)
-    private String content;
+    private String content; // 내용
 
     @Column(name = "ARTICLE_ID", nullable = false)
-    private Long articleId;
+    private Long articleId; // 게시글ID
 
     @Column(name = "PARENT_COMMENT_ID", nullable = false)
-    private Long parentCommentId;
+    private Long parentCommentId;   // 상위 댓글 ID
 
     @Column(name = "WRITER_ID", nullable = false)
-    private Long writerId;
+    private Long writerId;  // 작성자ID
 
+    @Convert(converter = BooleanYNConverter.class)
     @Column(name = "DEL_YN", nullable = false, length = 1)
-    private String delYn = "N";
+    private boolean delYn;  // 삭제여부
 
     @Column(name = "CREATED_AT", nullable = false)
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt;    // 생성시간
 
     @Column(name = "MODIFIED_AT")
-    private LocalDateTime modifiedAt;
+    private LocalDateTime modifiedAt;   // 수정시간
 
 
     /**
@@ -63,7 +62,7 @@ public class Comment {
         comment.parentCommentId = parentCommentId == null ? commentId : parentCommentId;
         comment.articleId = articleId;
         comment.writerId = writerId;
-        comment.delYn = "N";
+        comment.delYn = false;
         comment.createdAt = LocalDateTime.now();
 
         return comment;
@@ -81,6 +80,6 @@ public class Comment {
      * 댓글 삭제
      */
     public void delete() {
-        delYn = "Y";
+        delYn = true;
     }
 }
