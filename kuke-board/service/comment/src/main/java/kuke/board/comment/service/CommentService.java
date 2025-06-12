@@ -3,6 +3,7 @@ package kuke.board.comment.service;
 import kuke.board.comment.entity.Comment;
 import kuke.board.comment.service.request.CommentCreateRequest;
 import kuke.board.comment.service.response.CommentResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 import kuke.board.comment.repository.CommentRepository;
 import kuke.board.common.snowflake.Snowflake;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import static java.util.function.Predicate.not;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CommentService {
@@ -89,7 +91,9 @@ public class CommentService {
      */
     private boolean hasChildren(Comment comment) {
         // 최대 2뎁스라고 가정
-        return commentRepository.countBy(comment.getArticleId(), comment.getCommentId(), 2L) == 2;
+        Long result = commentRepository.countBy(comment.getArticleId(), comment.getCommentId(), 2L);
+        log.info("hasChildren:: result = {}", result);
+        return result == 2;
     }
 
     /**

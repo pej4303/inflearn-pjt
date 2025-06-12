@@ -4,8 +4,10 @@ import kuke.board.comment.service.CommentService;
 import kuke.board.comment.service.request.CommentCreateRequest;
 import kuke.board.comment.service.response.CommentResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class CommentController {
@@ -36,7 +38,7 @@ public class CommentController {
      * @param commentId
      */
     @DeleteMapping("/v1/comment/{commentId}")
-    public void remove(@PathVariable Long commentId) {
+    public void remove(@PathVariable("commentId") Long commentId) {
         commentService.remove(commentId);
     }
 }

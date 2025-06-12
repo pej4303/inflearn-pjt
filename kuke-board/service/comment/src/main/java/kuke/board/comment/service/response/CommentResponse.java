@@ -1,6 +1,5 @@
 package kuke.board.comment.service.response;
 
-import kuke.board.comment.convert.BooleanYNConverter;
 import kuke.board.comment.entity.Comment;
 import lombok.Getter;
 import lombok.ToString;
