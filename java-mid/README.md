@@ -13,12 +13,7 @@
 
 ### ✅ Backend
 + Java 21
-+ Spring Boot 3.4.5
-
-### ✅ Test
-+ JUnit 5 (with Spring Boot Test)
 
 ### ✅ ETC & Tools
-+ Lombok
 + IntelliJ IDEA 2025.1.1.1
 ---
