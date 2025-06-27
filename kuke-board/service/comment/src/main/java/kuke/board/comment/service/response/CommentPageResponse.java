@@ -8,13 +8,13 @@ import java.util.List;
 @Getter
 @ToString
 public class CommentPageResponse {
-    private List<CommentResponse> articles;
-    private Long articleCount;
+    private List<CommentResponse> pageList;
+    private Long pageCount;
 
-    public static CommentPageResponse of(List<CommentResponse> articles, Long articleCount) {
+    public static CommentPageResponse of(List<CommentResponse> pageList, Long pageCount) {
         CommentPageResponse response = new CommentPageResponse();
-        response.articles = articles;
-        response.articleCount = articleCount;
+        response.pageList = pageList;
+        response.pageCount = pageCount;
         return response;
     }
 }

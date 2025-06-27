@@ -2,6 +2,7 @@ package kuke.board.comment.service;
 
 import kuke.board.comment.entity.Comment;
 import kuke.board.comment.service.request.CommentCreateRequest;
+import kuke.board.comment.service.response.CommentPageResponse;
 import kuke.board.comment.service.response.CommentResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,6 +10,8 @@ import kuke.board.comment.repository.CommentRepository;
 import kuke.board.common.snowflake.Snowflake;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 import static java.util.function.Predicate.not;
 
@@ -113,6 +116,35 @@ public class CommentService {
                     .filter(Comment::isRoot)        // 루트 댓글인 경우만
                     .orElseThrow();
         }
+    }
+
+    /**
+     * 페이징 조회
+     * @param articleId
+     * @param page
+     * @param pageSize
+     * @return
+     */
+    public CommentPageResponse searchAll(Long articleId, Long page, Long pageSize) {
+        return CommentPageResponse.of(
+                commentRepository.findAll(articleId, (page - 1) * pageSize, pageSize).stream().map(CommentResponse::from).toList(),
+                commentRepository.count(articleId, PageCalculator.calculatePageLimit(page, pageSize, 10L))
+        );
+    }
+
+    /**
+     * 무한 스크롤 조회
+     * @param articleId
+     * @param pageSize
+     * @param lastParentCommentId
+     * @param lastCommentId
+     * @return
+     */
+    public List<CommentResponse> searchAllScroll(Long articleId, Long pageSize, Long lastParentCommentId, Long lastCommentId) {
+        List<Comment> list = (lastParentCommentId == null || lastCommentId == null) ? commentRepository.findAllInitScroll(articleId, pageSize) :
+                commentRepository.findAllScroll(articleId, pageSize, lastParentCommentId, lastCommentId);
+
+        return list.stream().map(CommentResponse::from).toList();
     }
 }
 

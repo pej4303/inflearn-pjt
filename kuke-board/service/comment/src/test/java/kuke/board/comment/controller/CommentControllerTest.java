@@ -1,13 +1,16 @@
 package kuke.board.comment.controller;
 
+import kuke.board.comment.service.response.CommentPageResponse;
 import kuke.board.comment.service.response.CommentResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClient;
+import java.util.List;
 
 @Slf4j
 class CommentControllerTest {
@@ -44,6 +47,45 @@ class CommentControllerTest {
                           .body(CommentResponse.class);
 
         log.info("response : {}", response.toString());
+    }
+
+    @Test
+    @DisplayName("게시글 페이징 조회 테스트")
+    void test5() {
+        String uri = "/v1/comment?articleId=1&page=1&pageSize=10";
+
+        CommentPageResponse response = restClient.get()
+                .uri(uri)
+                .retrieve()
+                .body(CommentPageResponse.class);
+
+        response.getPageList().stream().forEach(i -> log.info("댓글ID = {}", i.getCommentId()));
+    }
+
+    @Test
+    @DisplayName("게시글 페이징 조회 테스트 - 무한 스크롤")
+    void test6()  {
+        /**
+         * Q. ParameterizedTypeReference 왜 사용하는가?
+         * A. 정확한 제네릭 타입을 유지하기 위해 ParameterizedTypeReference를 사용
+         */
+        List<CommentResponse> response = restClient.get()
+                .uri("/v1/comment/scroll?articleId=1&pageSize=5")
+                .retrieve()
+                .body(new ParameterizedTypeReference<List<CommentResponse>>() {});
+
+        Long lastParentCommentId = response.getLast().getParentCommentId();
+        Long lastCommentId = response.getLast().getCommentId();
+
+        log.info("lastParentCommentId = {}", lastParentCommentId);
+        log.info("lastCommentId = {}", lastCommentId);
+
+        List<CommentResponse> response2 = restClient.get()
+                .uri("/v1/comment/scroll?articleId=1&pageSize=5&lastParentCommentId=%s&lastCommentId=%s".formatted(lastParentCommentId, lastCommentId))
+                .retrieve()
+                .body(new ParameterizedTypeReference<List<CommentResponse>>() {});
+
+        response2.stream().forEach(i -> log.info("ID = {}", i.getCommentId()));
     }
 
     @Test
