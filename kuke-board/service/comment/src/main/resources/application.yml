@@ -8,23 +8,23 @@ spring:
   datasource:
     driver-class-name: oracle.jdbc.OracleDriver
     url: jdbc:oracle:thin:@localhost:1521/xe
-    username: ENC(UFQeqTye1HXbE/hmxLhWOQ==)
-    password: ENC(mDdrvWKtgc8b5ACRa6jdTw==)
+    username: ENC(JU9/cDMT3tUwHxUPiPr48jfbr8f+65CY)
+    password: ENC(JU9/cDMT3tUwHxUPiPr48jfbr8f+65CY)
 
   jpa:
     database-platform: org.hibernate.dialect.OracleDialect
     open-in-view: false
-    show-sql: true
+    show-sql: false
     hibernate:
       ddl-auto: none
-    properties:
-      hibernate:
-        format_sql: true
-        use_sql_comments: true
+#    properties:
+#      hibernate:
+#        format_sql: true
+#        use_sql_comments: true
 
-logging:
-  level:
-    org.hibernate.orm.jdbc.bind: trace  # 파라미터 바인딩
+#logging:
+#  level:
+#    org.hibernate.orm.jdbc.bind: trace  # 파라미터 바인딩
     
 jasypt:
   encryptor:
