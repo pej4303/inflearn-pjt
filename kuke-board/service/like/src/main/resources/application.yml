@@ -1,1 +1,31 @@
-server.port: 9002
+server:
+  port: 9002
+
+spring:
+  application:
+    name: kuke-board-like-service
+
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1521/xe
+    username: ENC(Jqb2lwK/gqlcxU/fLFUymxFnQtQZhyne)
+    password: ENC(Jqb2lwK/gqlcxU/fLFUymxFnQtQZhyne)
+
+  jpa:
+    database-platform: org.hibernate.dialect.OracleDialect
+    open-in-view: false
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
+
+  logging:
+    level:
+      org.hibernate.orm.jdbc.bind: trace  # 파라미터 바인딩
+
+  jasypt:
+    encryptor:
+      password: ${JASYPT_ENCRYPTOR_PASSWORD}

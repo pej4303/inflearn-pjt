@@ -9,12 +9,14 @@ import kuke.board.article.service.request.ArticleCreateRequest;
 import kuke.board.article.service.request.ArticleUpdateRequest;
 import kuke.board.article.service.response.ArticleResponse;
 import kuke.board.common.snowflake.Snowflake;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -38,7 +40,9 @@ import java.util.concurrent.Executors;
 
 import static org.mockito.ArgumentMatchers.any;
 
+@Slf4j
 @SpringBootTest
+@TestPropertySource(properties = "jasypt.encryptor.password=1q2w3e4r")
 class DataInitializer {
     @PersistenceContext
     EntityManager entityManager;  // JPA 엔티티 매니저
@@ -75,7 +79,7 @@ class DataInitializer {
             executorService.submit(() -> {
                 insert();           // 데이터 삽입 작업 수행
                 latch.countDown();  // 작업 완료 후 카운트 감소
-                System.out.println("## cnt = " + latch.getCount());
+                log.info("## cnt = {}", latch.getCount());
             });
         }
         // 호출하면 카운트가 0이 될 때까지 기다린다. 모든 작업이 끝날 때까지 대기

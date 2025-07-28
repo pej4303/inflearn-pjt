@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import java.util.concurrent.CountDownLatch;
@@ -16,6 +17,7 @@ import java.util.concurrent.Executors;
 
 @Slf4j
 @SpringBootTest
+@TestPropertySource(properties = "jasypt.encryptor.password=1q2w3e4r")
 class DataInitializer {
     @PersistenceContext
     EntityManager entityManager;  // JPA 엔티티 매니저
