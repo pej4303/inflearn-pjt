@@ -12,7 +12,7 @@ import jakarta.persistence.Id;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "TB_LIKE")
+@Table(name = "TB_ARTICLE_LIKE")
 @Getter
 @ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -24,7 +24,7 @@ public class ArticleLike {
     private Long articleId; // 샤드키
     @Column(name = "USER_ID")
     private Long userId;
-    @Column(name = "CREATE_AT")
+    @Column(name = "CREATED_AT")
     private LocalDateTime createdAt;
 
     // 팩토리 메서드

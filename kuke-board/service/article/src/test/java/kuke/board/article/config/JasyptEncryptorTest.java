@@ -8,13 +8,15 @@ import org.junit.jupiter.api.Test;
 public class JasyptEncryptorTest {
     @Test
     void test() {
-        String jasyptKey = "1111";  // 암호화 키
+        String jasyptKey = "1q2w3e4r";  // 암호화 키
 
         StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
         encryptor.setAlgorithm("PBEWithMD5AndDES");
         encryptor.setPassword(jasyptKey);
 
-        String plainText = "test";
+//        String plainText = "C##ARTICLE_SVC";
+//        String plainText = "C##COMMENT_SVC";
+        String plainText = "C##LIKE_SVC";
         String encryptedText = encryptor.encrypt(plainText);
 
         log.info("ENC({})", encryptedText);
