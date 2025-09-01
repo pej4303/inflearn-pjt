@@ -1,0 +1,37 @@
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>좋아요</title>
+    <!-- Vue CDN : 이 스크립트만 있으면 html로도 vue를 사용할 수 있다. -->
+    <!-- Vue 3 CDN -->
+    <!-- <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script> -->
+    <!-- Vue 2 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+<!--
+- Vue나 React에서는 url이 변경되지 않는다.
+- 데이터만 바꾸면 화면이 알아서 변경된다. 그래서 데이터만 신경쓰면 된다.
+- 프론트에서는 화면이랑 데이터를 일치시키는 것이 중요하다.
+-->
+<script>
+    const app = new Vue({
+        el: '#root', // Vue가 관리할 영역
+        data: {
+            liked: false    // 좋아요 눌렀는지 여부
+        },
+        methods: {
+            onClickBtn() {
+                // this : data를 가리킴, Vue 인스턴스
+                this.liked = !this.liked;
+            }
+        }
+    })
+</script>
+<body>
+    <div id="root">
+        <button>like</button>
+        <div>좋아요 눌렀음</div>
+    </div>
+</body>
+</html>
