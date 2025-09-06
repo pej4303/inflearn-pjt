@@ -4,11 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>끝말잇기</title>
-    <!-- Vue 2 CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <!-- Vue 3 CDN -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 </head>
-<!--
--->
 <body>
     <div id="root">
         <div>{{ word }}</div>
@@ -20,32 +18,43 @@
     </div>
 </body>
 <script>
-    const app = new Vue({
-        el: '#root',
-        data: {
-            word : '제로초', // 제시어
-            inputValue: '',    // 입력값 
-            resultStr : '',    // 결과값
-        },
-        methods: {
-            onSubmitForm() {
-                if (this.inputValue == '') {
-                    alert('값을 입력해주세요.');
-                    this.$refs.refInput.focus();
-                    return false;
-                }
+    const { ref, nextTick } = Vue;
 
-                if (this.inputValue.slice(0, 1) === this.word.slice(-1)) {
-                    // 끝말잇기 성공
-                    this.word = this.inputValue;
-                } else {
-                    this.resultStr = '땡~!';
-                }
+    const app = Vue.createApp({
+      setup() {
+        const word = ref('제로초');     // 제시어
+        const inputValue = ref('');     // 입력값
+        const resultStr = ref('');      // 결과값
+        const refInput = ref(null);     // input DOM 참조
 
-                this.inputValue = '';
-                this.$refs.refInput.focus();
-            },
-        },
+        const onSubmitForm = () => {
+          if (inputValue.value === '') {
+            alert('값을 입력해주세요.');
+            refInput.value.focus();
+            return;
+          }
+
+          if (inputValue.value.slice(0, 1) === word.value.slice(-1)) {
+            word.value = inputValue.value;
+            resultStr.value = '딩동댕!';
+          } else {
+            resultStr.value = '땡~!';
+          }
+
+          inputValue.value = '';
+          nextTick(() => refInput.value.focus());
+        };
+
+        return {
+          word,
+          inputValue,
+          resultStr,
+          refInput,
+          onSubmitForm
+        };
+      }
     });
+
+    app.mount('#root');
 </script>
 </html>

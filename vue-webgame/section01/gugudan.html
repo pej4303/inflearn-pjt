@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>구구단</title>
-    <!-- Vue 2 CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <!-- Vue 3 CDN -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 </head>
 <!--
 - 바뀌는 부분을 중점적으로 생각해야 하고 그걸 data에 넣어서 관리해야 한다.
@@ -27,40 +27,53 @@
     </div>
 </body>
 <script>
-    const app = new Vue({
-        el: '#root',
-        data: {
-            num1: Math.ceil(Math.random() * 9),    // 첫 번째 수 : 1~9 중 랜덤하게 나오게 설정
-            num2: Math.ceil(Math.random() * 9),    // 두 번째 수 : 1~9 중 랜덤하게 나오게 설정
-            inputValue: '',    // 입력값 
-            resultStr : '',    // 구구단 결과값
-        },
-        methods: {
-            onSubmitForm() {
-                if (this.inputValue == '') {
+    const { ref } = Vue;
+
+    const app = Vue.createApp({
+        setup() {
+            const num1 = ref(Math.ceil(Math.random() * 9)); // 첫 번째 수 : 1~9 중 랜덤하게 나오게 설정
+            const num2 = ref(Math.ceil(Math.random() * 9)); // 두 번째 수 : 1~9 중 랜덤하게 나오게 설정
+            const inputValue = ref(null);   // 입력값 
+            const resultStr = ref(''); // 구구단 결과값
+            const refInput = ref(null);
+
+            // Form 제출 이벤트
+            const onSubmitForm = () => {
+                // 숫자 타입일때
+                if (!inputValue.value) {
                     alert('값을 입력해주세요.');
                     // ref는 태그에 직접 접근해야 될때 사용함
                     // 너무 많이 사용하는 것은 안 좋음
-                    this.$refs.refInput.focus();
+                    refInput.value.focus(); 
                     return false;
                 }
 
-                const answer = this.num1 * this.num2;
+                const answer = num1.value * num2.value;
                 
-                if (this.inputValue === answer) {
-                    this.resultStr = '정답입니다!';
-                    
-                    this.inputValue = '';
+                if (inputValue.value === answer) {
+                    resultStr.value = '정답입니다!';
+                    inputValue.value = '';
                     
                     // 구구단 문제 다시 내기
-                    this.num1 = Math.ceil(Math.random() * 9);
-                    this.num2 = Math.ceil(Math.random() * 9);
+                    num1.value = Math.ceil(Math.random() * 9);
+                    num2.value = Math.ceil(Math.random() * 9);
                 } else {
-                    this.resultStr = '오답입니다!';
-                    this.$refs.refInput.focus();
+                    resultStr.value = '오답입니다!';
+                    refInput.value.focus();
                 }
-            },
-        },
+            };
+
+            return {
+                num1,
+                num2,
+                inputValue,
+                resultStr,
+                refInput,
+                onSubmitForm,
+            }
+        }
     });
+
+    app.mount('#root');
 </script>
 </html>

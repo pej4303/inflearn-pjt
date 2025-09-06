@@ -5,9 +5,7 @@
     <title>좋아요</title>
     <!-- Vue CDN : 이 스크립트만 있으면 html로도 vue를 사용할 수 있다. -->
     <!-- Vue 3 CDN -->
-    <!-- <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script> -->
-    <!-- Vue 2 CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 </head>
 <!--
 - Vue나 React에서는 url이 변경되지 않는다.
@@ -22,17 +20,24 @@
     </div>
 </body>
 <script>
-    const app = new Vue({
-        el: '#root', // Vue가 관리할 영역 : root 이름을 가진 영역을 통제함
-        data: {
-            liked: false    // 좋아요 눌렀는지 여부
-        },
-        methods: {
-            onClickBtn() {
-                // this : data를 가리킴, Vue 인스턴스
-                this.liked = !this.liked;
-            },
+    const { ref } = Vue;
+
+    const app = Vue.createApp({
+        setup() {
+            const liked = ref(false);    // 좋아요 눌렀는지 여부
+            // 버튼 클릭 이벤트
+            const onClickBtn = () => {
+                liked.value = !liked.value; // ref는 .value로 접근해야 함
+            };
+
+            return {
+                liked,
+                onClickBtn
+            }
         },
     });
+
+    // Vue가 관리할 영역 : root 이름을 가진 영역을 통제함
+    app.mount('#root');
 </script>
 </html>
