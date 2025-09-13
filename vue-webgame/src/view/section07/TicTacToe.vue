@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { useSection07Store } from '../stores/section07';
+import { useSection07Store } from '@/store/section07'
 export default {
     setup() {
         const store = useSection07Store();
