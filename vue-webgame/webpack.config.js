@@ -38,9 +38,10 @@ module.exports = {
         publicPath: '/dist',  // 브라우저가 접근할 경로
     },
     devServer: {
-        static: path.resolve(__dirname, 'src'), // src 전체를 기준
+        static: path.resolve(__dirname, 'public'), // src → public로 변경
         port: 8080,
         open: true, // 브라우저 자동 실행
         hot: true,
+        historyApiFallback: true // Vue Router를 쓸 땐 꼭 필요!
     },
 };

@@ -1,16 +1,9 @@
-import { createApp } from 'vue';
-import { createPinia } from 'pinia';
-import NumberBaseball from './section03/NumberBaseball.vue'
-import ResponseCheck from './section04/ResponseCheck.vue'
-import RockScissorsPaper from './section05/RockScissorsPaper.vue';
-import LottoGenerator from './section06/LottoGenerator.vue';
-import TicTacToe from './section07/TicTacToe.vue';
+import { createApp } from 'vue'
+import { createPinia } from 'pinia'
+import App from './App.vue'
+import router from './router'
 
-// createApp(NumberBaseball).mount('#section03');
-// createApp(ResponseCheck).mount('#section04');
-// createApp(RockScissorsPaper).mount('#section05');
-// createApp(LottoGenerator).mount('#section06');
-
-const app = createApp(TicTacToe)
-app.use(createPinia());   // Pinia 등록
-app.mount('#section07');
+const app = createApp(App)
+app.use(createPinia())
+app.use(router)   // 라우터 등록
+app.mount('#app') // index.html에 #root으로 mount
