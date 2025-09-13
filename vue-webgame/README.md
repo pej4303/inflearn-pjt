@@ -12,7 +12,7 @@ src
   ├─ router
   │   └─ index.js       # Vue Router 설정 파일, 페이지 라우팅 관리
   ├─ store
-  │   └─ main.js        # Pinia 전역 상태 관리 파일
+  │   └─ section07.js   # Pinia 전역 상태 관리 파일(틱택토 전용용)
   ├─ view
   │   ├─ section03      
   │   ├─ section04      
@@ -21,10 +21,11 @@ src
   │   ├─ section07       
   │   ├─ section08       
   │   └─ section09       
-  ├─ App.vue             # 최상위 루트 컴포넌트
+  ├─ App.vue             # 최상위 루트 컴포넌트, 뻐대
   └─ main.js             # Vue 앱 초기화 및 전역 설정
 ```
 ## 📌 초기 렌더링 흐름
+```
 index.html
     │
     ▼
@@ -39,7 +40,7 @@ App.vue 렌더링
     ▼
 Section 컴포넌트 렌더링
     │  - Section별 게임/학습 UI 표시
-
+```
 
 ## 🚀 기술 스택
 
