@@ -13,7 +13,7 @@ src
   │   └─ index.js       # Vue Router 설정 파일, 페이지 라우팅 관리
   ├─ store
   │   └─ section07.js   # Pinia 전역 상태 관리 파일(틱택토 전용용)
-  ├─ view
+  ├─ view               
   │   ├─ section03      
   │   ├─ section04      
   │   ├─ section05       

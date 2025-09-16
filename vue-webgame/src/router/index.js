@@ -5,6 +5,7 @@ import ResponseCheck from '../view/section04/ResponseCheck.vue';
 import RockScissorsPaper from '../view/section05/RockScissorsPaper.vue';
 import LottoGenerator from '../view/section06/LottoGenerator.vue';
 import TicTacToe from '../view/section07/TicTacToe.vue';
+import MineSweeper from '../view/section08/MineSweeper.vue';
 
 const routes = [
   { path: '/', name: 'Home', component: Home },
@@ -13,6 +14,7 @@ const routes = [
   { path: '/section05', name: '가위바위보', component: RockScissorsPaper },
   { path: '/section06', name: '로또번호 추첨기', component: LottoGenerator },
   { path: '/section07', name: '틱택토', component: TicTacToe },
+  { path: '/section08', name: '지뢰찾기', component: MineSweeper },
 ]
 
 const router = createRouter({

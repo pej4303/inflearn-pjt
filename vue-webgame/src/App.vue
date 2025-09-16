@@ -7,6 +7,7 @@
       <router-link to="/section05">가위바위보</router-link>|
       <router-link to="/section06">로또번호 추첨기</router-link>|
       <router-link to="/section07">틱택토</router-link>|
+      <router-link to="/section08">지뢰찾기</router-link>|
     </nav>
     <hr/>
     <router-view />
