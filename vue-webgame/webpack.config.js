@@ -6,7 +6,7 @@ module.exports = {
     mode: 'development',
     devtool: 'eval-source-map', // 웹팩에서 사용하는 옵션
     resolve: {
-        extensions: ['.js', '.vue', '.json'],
+        extensions: ['.ts', '.js', '.vue', '.json'],
         alias: {
             '@': path.resolve(__dirname, 'src')
         },
@@ -21,6 +21,12 @@ module.exports = {
             {   // vue 파일은 이제 vue-loader 가 처리함
                 test: /\.vue$/,
                 loader: 'vue-loader'
+            },
+            {
+                test: /\.ts$/,
+                loader: 'ts-loader',
+                options: { appendTsSuffixTo: [/\.vue$/] },
+                exclude: /node_modules/,
             },
             {
                 test: /\.js$/,
