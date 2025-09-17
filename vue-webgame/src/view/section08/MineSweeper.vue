@@ -55,6 +55,8 @@ export default {
 
         const message = ref('');  // 하단 문구
 
+        let openedCnt = 0;    // 열린 칸수
+
         // isTimeStart 값에 따라 자동으로 타이머 실행, 중지
         watch(isTimeStart, (newValue) => {
             if (newValue) {
@@ -167,8 +169,13 @@ export default {
             let cellData = tableData.value[rowIndex][cellIndex];
             if (cellData === CODE.NORMAL) {
                 const mineCnt = getMineCnt(rowIndex, cellIndex);
-                console.log(mineCnt);
-                tableData.value[rowIndex][cellIndex] = mineCnt; // 주변 지뢰 수로 표시
+                // 주변 지뢰 수로 표시
+                tableData.value[rowIndex][cellIndex] = mineCnt;
+
+                openedCnt++;
+                // 승리 조건 체크
+                checkWin();
+
             } else if (cellData === CODE.MINE) {
                 tableData.value[rowIndex][cellIndex] = CODE.CLICKED_MINE;
                 isTimeStart.value = false;
@@ -185,6 +192,8 @@ export default {
                 isTimeStart.value = false;
                 message.value = ''; 
                 tableData.value = [];
+
+                openedCnt = 0;
             }
         };
         
@@ -242,6 +251,19 @@ export default {
             }
 
             return data;
+        };
+
+        // 승리 조건 체크
+        const checkWin = () => {
+            // 총 칸의 수
+            const totCell = mineData.value.row * mineData.value.cell;
+            // 지뢰의 개수
+            const totMine = mineData.value.mine;
+            // 열린 칸이 전체 칸 - 지뢰 개수와 같으면 승리
+            if (openedCnt === (totCell - totMine)) {
+                isTimeStart.value = false;
+                message.value = '지뢰찾기 성공';
+            }
         };
 
         // 혹시 컴포넌트 사라질 때 타이머 정리
