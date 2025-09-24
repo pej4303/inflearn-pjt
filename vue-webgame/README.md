@@ -46,8 +46,10 @@ Section 컴포넌트 렌더링
 
 ### ✅ Frontend
 + Vue 3 Composition API
-+ Vue Router (페이지 이동, 탭/네스트 라우팅)
-+ Pinia (전역 상태 관리)   
++ Vue Router : 페이지 이동, 탭/네스트 라우팅
++ Pinia : 전역 상태 관리
++ TypeScript
++ Ant Design Vue : UI 컴포넌트 라이브러리
 
 ### ✅ Development Tools
 +  Webpack    
