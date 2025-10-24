@@ -55,3 +55,9 @@ Section 컴포넌트 렌더링
 +  Webpack    
 + NPM
 ---
+
+## 로컬 실행 방법
+```bash
+npm run build
+npm run dev
+```
