@@ -1,4 +1,4 @@
-package section1.ex1;
+package section2;
 
 /**
  * 제네릭 클래스
