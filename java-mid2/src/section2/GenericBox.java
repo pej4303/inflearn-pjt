@@ -12,6 +12,9 @@ public class GenericBox<T> {
      */
     private T value;
 
+    // static 메서드에서 타입 매개변수를 사용할 수 없다.
+    // static T test(T t) {}
+
     public void setValue(T value) {
         this.value = value;
     }

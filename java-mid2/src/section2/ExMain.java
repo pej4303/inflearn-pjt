@@ -27,6 +27,7 @@ public class ExMain {
 //        // => 권장방식
 //        GenericBox<Object> box3 = new GenericBox<>();
 //    }
+    
     public static void main(String[] args) {
         Animal animal = new Animal("동물", 0);
         Dog dog = new Dog("백재롱", 30);
