@@ -1,5 +1,7 @@
 package section2;
 
+import section2.animal.Animal;
+
 public class GenericMethod {
     public static Object objMethod(Object obj) {
         System.out.println("Object print : " + obj);
@@ -20,6 +22,21 @@ public class GenericMethod {
     public static <T extends Number> T numberMethod(T t) {
         System.out.println("number print : " + t);
         return t;
+    }
+
+    /**
+     * 와일드카드(?) 제네릭 메서드
+     * @param box
+     */
+    public static void printWildCard(GenericBox<?> box) {
+        // ? == <? extends Object>
+        System.out.println("? = " + box.getValue());
+    }
+    // 와일드카드도 타입 매개변수를 제한 할 수 있음
+    // 와일드카드는 이미 만들어진 제네릭 타입을 활용 할 때 사용하는 것이다.
+    public static void printWildCard2(GenericBox<? extends Animal> box) {
+        Animal animal = box.getValue();
+        System.out.println("name = " + animal.getName());
     }
 
     public static void main(String[] args) {
