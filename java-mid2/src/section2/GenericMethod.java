@@ -1,6 +1,7 @@
 package section2;
 
 import section2.animal.Animal;
+import section2.animal.Dog;
 
 public class GenericMethod {
     public static Object objMethod(Object obj) {
@@ -39,6 +40,15 @@ public class GenericMethod {
         System.out.println("name = " + animal.getName());
     }
 
+    /**
+     * 와일드카드로 하한
+     * 최소한 Animal 까지 가능함
+     * @param box
+     */
+    public static void printWildCard3(GenericBox<? super Animal> box) {
+        box.setValue(new Dog("멍멍", 100));
+    }
+
     public static void main(String[] args) {
         Integer num = 10;
 
@@ -50,5 +60,11 @@ public class GenericMethod {
         Integer resultNum = GenericMethod.<Integer>genericMethod(num);
         // => Integer 타입으로 반환된다.
         System.out.println("resultNum = " + resultNum);
+
+        GenericBox<Animal> animalGenericBox = new GenericBox<>();
+        GenericBox<Dog> dogGenericBox = new GenericBox<>();
+
+        // 최소한 Animal 까지 가능함
+        printWildCard3(dogGenericBox);
     }
 }
