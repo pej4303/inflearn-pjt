@@ -25,20 +25,31 @@ public class Section03Main {
 //        }
 //    }
 
+//    public static void main(String[] args) {
+//        MyArrayList list = new MyArrayList();
+//        list.add("1");
+//        list.add("2");
+//        list.add("3");
+//
+//        System.out.println("size = " + list.getSize());
+//        System.out.println(list.toString());
+//        System.out.println("list.get(1) = " + list.get(1));
+//        System.out.println("list.indexOf(\"2\") = " + list.indexOf("2"));
+//
+//        list.set(2, "ddd");
+//
+//        System.out.println(list.toString());
+//    }
+
     public static void main(String[] args) {
-        MyArrayList list = new MyArrayList();
+        MyArrayList list = new MyArrayList(2);
         list.add("1");
         list.add("2");
+        System.out.println(list);
         list.add("3");
-
-        System.out.println("size = " + list.getSize());
-        System.out.println(list.toString());
-        System.out.println("list.get(1) = " + list.get(1));
-        System.out.println("list.indexOf(\"2\") = " + list.indexOf("2"));
-
-        list.set(2, "ddd");
-
-        System.out.println(list.toString());
-
+        System.out.println(list);
+        
+        list.add(0, "첫번째");
+        System.out.println(list);
     }
 }
