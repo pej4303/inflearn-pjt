@@ -1,5 +1,6 @@
 package section03;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Section03Main {
@@ -41,15 +42,30 @@ public class Section03Main {
 //        System.out.println(list.toString());
 //    }
 
-    public static void main(String[] args) {
-        MyArrayList list = new MyArrayList(2);
-        list.add("1");
-        list.add("2");
-        System.out.println(list);
-        list.add("3");
-        System.out.println(list);
-        
-        list.add(0, "첫번째");
-        System.out.println(list);
-    }
+//    public static void main(String[] args) {
+//        MyArrayList list = new MyArrayList(2);
+//        list.add("1");
+//        list.add("2");
+//        System.out.println(list);
+//        list.add("3");
+//        System.out.println(list);
+//
+//        list.add(0, "첫번째");
+//        System.out.println(list);
+//
+//        ArrayList<String> list2 = new ArrayList<>();
+//        list2.add("ddd");
+//    }
+
+//    public static void main(String[] args) {
+//        MyGenericArrayList<String> list = new MyGenericArrayList<>();
+//        list.add("a");
+////        list.add(1); // => 오류 발생
+//        list.add("b");
+//        list.add("c");
+//        System.out.println(list);
+//
+//        String str = list.get(1);
+//        System.out.println("str =" + str);
+//    }
 }
