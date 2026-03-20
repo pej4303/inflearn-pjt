@@ -17,7 +17,52 @@ public class MyLinkedList {
             lastNode.next = newNode;
         }
 
-        size++;
+        this.size++;
+    }
+
+    public void add(int index, Object obj) {
+        Node newNode = new Node(obj);
+
+        if (index == 0) {
+            // 첫 번째 노드에 추가
+            newNode.next = node;
+            node = newNode;
+        } else {
+            // 직전 노드 찾기
+            Node prev = this.getNode(index - 1);
+            // 새 노드에 찾은 직전 노드 연결
+            newNode.next = prev.next;
+            // 직전 노드에 새 노드를 연결
+            prev.next = newNode;
+        }
+        this.size++;
+    }
+
+    /**
+     * 삭제
+     * @param index
+     * @return
+     */
+    public Object remove(int index) {
+        Node removeNode = this.getNode(index);
+        Object removeItem = removeNode.item;
+
+        if (index == 0) {
+            node = removeNode.next;
+        } else {
+            // 삭제 대상의 직전 노드 찾기
+            Node prev = this.getNode(index - 1);
+            // 직전 노드(prev)의 다음 노드를 삭제 노드의 다음 노드와 연결한다.
+            prev.next = removeNode.next;
+        }
+
+        // 삭제 대상 노드 초기화
+        removeNode.item = null;
+        removeNode.next = null;
+
+        this.size--;
+
+        return removeItem;
     }
 
     /**
@@ -108,6 +153,16 @@ public class MyLinkedList {
         System.out.println("list.get(1) = " + list.get(1));
         System.out.println("list.indexOf(\"c\") = " + list.indexOf("c"));
         System.out.println("list.set(2, \"z\") = " + list.set(2, "z"));
+        System.out.println(list);
+
+        list.add("d");
+
+        list.add(2, "e");
+        // 중간 항목 추가 : O(n)
+        System.out.println(list);
+
+        list.remove(3);
+        // 중간 항목 삭제 : O(n)
         System.out.println(list);
     }
 }
