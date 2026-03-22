@@ -1,4 +1,4 @@
-package section03;
+package section04;
 
 import java.util.Arrays;
 
@@ -30,16 +30,30 @@ public class MyGenericArrayList<E> {
     }
 
     /**
-     * 배열 길이 반환
-     * @return
+     * 요소 변경 (기존값 반환)
+     * @param index 위치
+     * @param e 변경할 요소
+     * @return 기존 요소
      */
-    public int getSize() {
-        return this.size;
+    public E set(int index, E e) {
+        E oldVal = this.get(index);
+        this.elementData[index] = e;
+        return oldVal;
     }
 
     /**
-     * 배열 추가
-     * @param e
+     * 요소 반환
+     * @param index 위치
+     * @return 요소
+     */
+    public E get(int index) {
+        // 조회할 때는 Object 타입을 지정한 타입 매개변수로 다운캐스팅 해줘야 한다.
+        return (E) this.elementData[index];
+    }
+
+    /**
+     * 마지막 위치에 요소 추가
+     * @param e 추가할 요소
      */
     public void add(E e) {
         if (this.size == this.elementData.length) {
@@ -50,6 +64,11 @@ public class MyGenericArrayList<E> {
         this.size++;
     }
 
+    /**
+     * 지정 위치에 요소 추가
+     * @param index 위치
+     * @param e 추가할 요소
+     */
     public void add(int index, E e) {
         if (this.size == this.elementData.length) {
             sizeUp();
@@ -60,19 +79,9 @@ public class MyGenericArrayList<E> {
     }
 
     /**
-     * 배열 원소 이동
-     * @param index
-     */
-    private void shiftRightFrom(int index) {
-        for (int i = this.size; i > index; i--) {
-            this.elementData[i] = this.elementData[i - 1];
-        }
-    }
-
-    /**
-     * 배열 삭제
-     * @param index
-     * @return
+     * 요소 삭제
+     * @param index 위치
+     * @return 삭제된 요소
      */
     public E remove(int index) {
         E oldVal = get(index);
@@ -83,6 +92,42 @@ public class MyGenericArrayList<E> {
         return oldVal;
     }
 
+    /**
+     * 요소 위치 반환 (없으면 -1)
+     * @param obj 찾을 요소
+     * @return 인덱스
+     */
+    public int indexOf(Object obj) {
+        for (int i = 0; i < this.size; i++) {
+            if (obj.equals(this.elementData[i])) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * 사이즈 반환
+     * @return 리스트 크기
+     */
+    public int size() {
+        return this.size;
+    }
+
+    /**
+     * 지정 위치부터 오른쪽으로 이동
+     * @param index 시작 위치
+     */
+    private void shiftRightFrom(int index) {
+        for (int i = this.size; i > index; i--) {
+            this.elementData[i] = this.elementData[i - 1];
+        }
+    }
+
+    /**
+     * 지정 위치부터 왼쪽으로 이동
+     * @param index 시작 위치
+     */
     private void shiftLeftFrom(int index) {
         for (int i = index; i < this.size - 1; i++) {
             this.elementData[i] = this.elementData[i + 1];
@@ -90,21 +135,8 @@ public class MyGenericArrayList<E> {
     }
 
     /**
-     * 배열 값 반환
-     * @param index
-     * @return
+     * 배열 크기 증가
      */
-    public E get(int index) {
-        // 조회할 때는 Object 타입을 지정한 타입 매개변수로 다운캐스팅 해줘야 한다.
-        return (E) this.elementData[index];
-    }
-
-    public E set(int index, E e) {
-        E oldVal = this.get(index);
-        this.elementData[index] = e;
-        return oldVal;
-    }
-
     private void sizeUp() {
         // 기존 배열의 사이즈
         int oldSize = this.elementData.length;
@@ -116,20 +148,6 @@ public class MyGenericArrayList<E> {
         }
         */
         this.elementData = Arrays.copyOf(this.elementData, newSize);
-    }
-
-    /**
-     * 배열 원소 검색
-     * @param obj
-     * @return
-     */
-    public int indexOf(Object obj) {
-        for (int i = 0; i < this.size; i++) {
-            if (obj.equals(this.elementData[i])) {
-                return i;
-            }
-        }
-        return -1;
     }
 
     @Override

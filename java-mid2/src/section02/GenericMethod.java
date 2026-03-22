@@ -46,6 +46,7 @@ public class GenericMethod {
      * @param box
      */
     public static void printWildCard3(GenericBox<? super Animal> box) {
+
         box.setValue(new Dog("멍멍", 100));
     }
 

@@ -1,6 +1,6 @@
-package section02.animal;
+package section03.animal;
 
-public class Cat extends Animal{
+public class Cat extends Animal {
     public Cat(String name, int size) {
         super(name, size);
     }

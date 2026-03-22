@@ -1,4 +1,4 @@
-package section02.animal;
+package section03.animal;
 
 public class Animal {
     private String name;
