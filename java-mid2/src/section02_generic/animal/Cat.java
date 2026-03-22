@@ -1,6 +1,6 @@
-package section02.animal;
+package section02_generic.animal;
 
-import section03.animal.Animal;
+import section03_generic2.animal.Animal;
 
 public class Cat extends Animal {
     public Cat(String name, int size) {

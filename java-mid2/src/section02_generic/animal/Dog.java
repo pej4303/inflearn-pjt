@@ -1,4 +1,4 @@
-package section03.animal;
+package section02_generic.animal;
 
 public class Dog extends Animal {
     public Dog(String name, int size) {

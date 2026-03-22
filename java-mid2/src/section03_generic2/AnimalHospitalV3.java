@@ -1,6 +1,6 @@
-package section03;
+package section03_generic2;
 
-import section03.animal.Animal;
+import section03_generic2.animal.Animal;
 
 public class AnimalHospitalV3<T extends Animal> {
 

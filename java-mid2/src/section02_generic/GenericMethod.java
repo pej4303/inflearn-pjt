@@ -1,7 +1,7 @@
-package section02;
+package section02_generic;
 
-import section02.animal.Animal;
-import section02.animal.Dog;
+import section02_generic.animal.Animal;
+import section02_generic.animal.Dog;
 
 public class GenericMethod {
     public static Object objMethod(Object obj) {

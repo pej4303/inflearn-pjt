@@ -1,4 +1,4 @@
-package section05;
+package section05_linkedList;
 
 /**
  * MyLinkedList 에서 제네릭을 도입하여 타입 안정성을 확보

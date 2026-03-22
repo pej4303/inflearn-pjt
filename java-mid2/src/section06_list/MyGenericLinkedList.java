@@ -1,19 +1,20 @@
-package section05;
+package section06_list;
 
-public class MyLinkedList {
-    private Node node;
+public class MyGenericLinkedList<E> implements MyList<E> {
+    private Node<E> node;
     private int size = 0;
 
     /**
      * 요소 변경 (기존값 반환)
      * @param index 위치
-     * @param obj 변경할 요소
+     * @param e 변경할 요소
      * @return 기존 요소
      */
-    public Object set(int index, Object obj) {
-        Node n = this.getNode(index);
-        Object oldVal = n.item;
-        n.item = obj;
+    @Override
+    public E set(int index, E e) {
+        Node<E> n = this.getNode(index);
+        E oldVal = n.item;
+        n.item = e;
 
         return oldVal;
     }
@@ -23,21 +24,24 @@ public class MyLinkedList {
      * @param index 위치
      * @return 요소
      */
-    public Object get(int index) {
-        Node node = this.getNode(index);
+    @Override
+    public E get(int index) {
+        Node<E> node = this.getNode(index);
         return node.item;
     }
 
     /**
      * 마지막 위치에 요소 추가
-     * @param obj 추가할 요소
+     * @param e 추가할 요소
      */
-    public void add(Object obj) {
-        Node newNode = new Node(obj);
+    @Override
+    public void add(E e) {
+        Node newNode = new Node(e);
+
         if (this.node == null) {
             this.node = newNode;
         } else {
-            Node lastNode = getLastNode();
+            Node<E> lastNode = this.getLastNode();
             lastNode.next = newNode;
         }
 
@@ -47,10 +51,11 @@ public class MyLinkedList {
     /**
      * 지정 위치에 요소 추가
      * @param index 위치
-     * @param obj 추가할 요소
+     * @param e 추가할 요소
      */
-    public void add(int index, Object obj) {
-        Node newNode = new Node(obj);
+    @Override
+    public void add(int index, E e) {
+        Node<E> newNode = new Node(e);
 
         if (index == 0) {
             // 첫 번째 노드에 추가
@@ -58,12 +63,13 @@ public class MyLinkedList {
             node = newNode;
         } else {
             // 직전 노드 찾기
-            Node prev = this.getNode(index - 1);
+            Node<E> prev = this.getNode(index - 1);
             // 새 노드에 찾은 직전 노드 연결
             newNode.next = prev.next;
             // 직전 노드에 새 노드를 연결
             prev.next = newNode;
         }
+
         this.size++;
     }
 
@@ -72,15 +78,16 @@ public class MyLinkedList {
      * @param index 위치
      * @return 삭제된 요소
      */
-    public Object remove(int index) {
-        Node removeNode = this.getNode(index);
-        Object removeItem = removeNode.item;
+    @Override
+    public E remove(int index) {
+        Node<E> removeNode = this.getNode(index);
+        E removeItem = removeNode.item;
 
         if (index == 0) {
             node = removeNode.next;
         } else {
             // 삭제 대상의 직전 노드 찾기
-            Node prev = this.getNode(index - 1);
+            Node<E> prev = this.getNode(index - 1);
             // 직전 노드(prev)의 다음 노드를 삭제 노드의 다음 노드와 연결한다.
             prev.next = removeNode.next;
         }
@@ -95,30 +102,17 @@ public class MyLinkedList {
     }
 
     /**
-     * 마지막 노드 가져오기
-     * @return
-     */
-    private Node getLastNode() {
-        Node n = this.node;
-
-        while (n.next != null) {
-            n = n.next;
-        }
-
-        return n;
-    }
-
-    /**
      * 요소 위치 반환 (없으면 -1)
-     * @param obj 찾을 요소
+     * @param e 찾을 요소
      * @return 인덱스
      */
-    public int indexOf(Object obj) {
+    @Override
+    public int indexOf(E e) {
         int index = 0;
-        Node n = node;
+        Node<E> n = node;
 
         while (n != null) {
-            if (obj.equals(n.next)) {
+            if (e.equals(n.next)) {
                 return index;
             }
 
@@ -133,6 +127,7 @@ public class MyLinkedList {
      * 사이즈 반환
      * @return 리스트 크기
      */
+    @Override
     public int size() {
         return this.size;
     }
@@ -142,12 +137,26 @@ public class MyLinkedList {
      * @param index 위치
      * @return 노드
      */
-    private Node getNode(int index) {
-        Node n = node;
+    private Node<E> getNode(int index) {
+        Node<E> n = node;
         // index만큼만 이동하면 된다.
         for (int i = 0; i < index; i++) {
             n = n.next;
         }
+        return n;
+    }
+
+    /**
+     * 마지막 노드 조회
+     * @return 마지막 노드
+     */
+    private Node<E> getLastNode() {
+        Node<E> n = this.node;
+
+        while (n.next != null) {
+            n = n.next;
+        }
+
         return n;
     }
 
@@ -159,8 +168,41 @@ public class MyLinkedList {
                 '}';
     }
 
+    /**
+     * 정적 중첩 클래스
+     */
+    private static class Node<E> {
+        E item;
+        Node<E> next;
+
+        public Node(E item) {
+            this.item = item;
+        }
+
+        @Override
+        public String toString() {
+            StringBuilder sb = new StringBuilder();
+            Node<E> n = this;
+            sb.append("[");
+
+            while (n != null) {
+                sb.append(n.item);
+
+                if (n.next != null) {
+                    sb.append("->");
+                }
+
+                n = n.next;
+            }
+
+            sb.append("]");
+
+            return sb.toString();
+        }
+    }
+
     public static void main(String[] args) {
-        MyLinkedList list = new MyLinkedList();
+        MyGenericLinkedList<String> list = new MyGenericLinkedList<>();
         System.out.println(list);
         list.add("a");
         System.out.println(list);
@@ -168,20 +210,7 @@ public class MyLinkedList {
         System.out.println(list);
         list.add("c");
 
-        System.out.println("list.size = " + list.size());
-        System.out.println("list.get(1) = " + list.get(1));
-        System.out.println("list.indexOf(\"c\") = " + list.indexOf("c"));
-        System.out.println("list.set(2, \"z\") = " + list.set(2, "z"));
-        System.out.println(list);
-
-        list.add("d");
-
-        list.add(2, "e");
-        // 중간 항목 추가 : O(n)
-        System.out.println(list);
-
-        list.remove(3);
-        // 중간 항목 삭제 : O(n)
-        System.out.println(list);
+        String str = list.get(0);
+        System.out.println("str =" + str);
     }
 }

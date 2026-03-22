@@ -1,8 +1,8 @@
-package section02;
+package section02_generic;
 
-import section02.animal.Animal;
-import section02.animal.Cat;
-import section02.animal.Dog;
+import section02_generic.animal.Animal;
+import section02_generic.animal.Cat;
+import section02_generic.animal.Dog;
 
 public class ComplexBox<T extends Animal> {
     private T animal;

@@ -1,4 +1,4 @@
-package section04;
+package section04_arrayList;
 
 public class Section04Main {
 }

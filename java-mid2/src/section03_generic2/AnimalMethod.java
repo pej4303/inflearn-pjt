@@ -1,8 +1,8 @@
-package section03;
+package section03_generic2;
 
-import section03.animal.Animal;
-import section03.animal.Cat;
-import section03.animal.Dog;
+import section03_generic2.animal.Animal;
+import section03_generic2.animal.Cat;
+import section03_generic2.animal.Dog;
 
 /**
  * 제네릭 클래스 -> 제네릭 메소드로 변경

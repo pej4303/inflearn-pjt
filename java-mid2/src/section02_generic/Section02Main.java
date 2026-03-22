@@ -1,4 +1,4 @@
-package section02;
+package section02_generic;
 
 public class Section02Main {
         public static void main(String[] args) {

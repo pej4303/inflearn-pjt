@@ -1,4 +1,4 @@
-package section06;
+package section06_list;
 
 /**
  * 공통 기능을 가진 제네릭 리스트 인터페이스

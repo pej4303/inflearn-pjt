@@ -1,12 +1,8 @@
-package section04;
+package section06_list;
 
 import java.util.Arrays;
 
-/**
- * MyArrayList 에서 제네릭을 도입하여 타입 안정성을 확보
- * => 데이터를 넣는 부분을 변경함
- */
-public class MyGenericArrayList<E> {
+public class MyGenericArrayList<E> implements MyList<E> {
     // 기본 사이즈
     private static final int DEFAULT_SIZE = 5;
     private Object[] elementData;
@@ -35,6 +31,7 @@ public class MyGenericArrayList<E> {
      * @param e 변경할 요소
      * @return 기존 요소
      */
+    @Override
     public E set(int index, E e) {
         E oldVal = this.get(index);
         this.elementData[index] = e;
@@ -46,6 +43,7 @@ public class MyGenericArrayList<E> {
      * @param index 위치
      * @return 요소
      */
+    @Override
     public E get(int index) {
         // 조회할 때는 Object 타입을 지정한 타입 매개변수로 다운캐스팅 해줘야 한다.
         return (E) this.elementData[index];
@@ -55,6 +53,7 @@ public class MyGenericArrayList<E> {
      * 마지막 위치에 요소 추가
      * @param e 추가할 요소
      */
+    @Override
     public void add(E e) {
         if (this.size == this.elementData.length) {
             sizeUp();
@@ -69,6 +68,7 @@ public class MyGenericArrayList<E> {
      * @param index 위치
      * @param e 추가할 요소
      */
+    @Override
     public void add(int index, E e) {
         if (this.size == this.elementData.length) {
             sizeUp();
@@ -83,6 +83,7 @@ public class MyGenericArrayList<E> {
      * @param index 위치
      * @return 삭제된 요소
      */
+    @Override
     public E remove(int index) {
         E oldVal = get(index);
         this.shiftLeftFrom(index);
@@ -97,6 +98,7 @@ public class MyGenericArrayList<E> {
      * @param obj 찾을 요소
      * @return 인덱스
      */
+    @Override
     public int indexOf(Object obj) {
         for (int i = 0; i < this.size; i++) {
             if (obj.equals(this.elementData[i])) {
@@ -110,6 +112,7 @@ public class MyGenericArrayList<E> {
      * 사이즈 반환
      * @return 리스트 크기
      */
+    @Override
     public int size() {
         return this.size;
     }

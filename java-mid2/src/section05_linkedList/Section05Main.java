@@ -1,4 +1,4 @@
-package section05;
+package section05_linkedList;
 
 public class Section05Main {
     public static void main(String[] args) {

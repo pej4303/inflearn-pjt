@@ -1,4 +1,4 @@
-package section03;
+package section03_generic2;
 
 import java.util.Arrays;
 

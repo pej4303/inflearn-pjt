@@ -1,4 +1,4 @@
-package section02;
+package section02_generic;
 
 /**
  * 제네릭 클래스
