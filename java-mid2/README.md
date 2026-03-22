@@ -6,6 +6,17 @@
 ## 📂 프로젝트 구조
 
 ```bash
+src
+ └─ main
+     └─ java
+         ├─ section02_generic
+         ├─ section03_generic2
+         ├─ section04_arrayList
+         ├─ section05_linkedList
+         └─ section06_list
+           ├─ MyList
+           ├─ MyGenericArrayList
+           └─ MyGenericLinkedList 
 ```
 
 
