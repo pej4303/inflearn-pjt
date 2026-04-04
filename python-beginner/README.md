@@ -20,4 +20,3 @@
 ### ✅ Development Tools
 + Cursor
 + Git
----
