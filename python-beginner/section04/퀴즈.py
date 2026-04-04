@@ -9,16 +9,17 @@
 '''
 
 url = 'http://naver.com'
+# url = 'http://youtube.com'
 
 # 규칙1
 tmp = url.removeprefix('http://')
 print(tmp)
 
 # 규칙2
-dotIndex = tmp.find('.')
-if dotIndex != -1:
-    tmp = tmp[0:dotIndex]
+dot_index = tmp.find('.')
+if dot_index != -1:
+    tmp = tmp[0:dot_index]
 
 # 규칙3
 pwd = tmp[0:3] + str(len(tmp)) + str(tmp.count('e')) + '!'
-print(f'생성된 비밀번호 : {pwd}')
+print(f'{url}의 생성된 비밀번호 : {pwd}')
