@@ -1,5 +1,5 @@
 # 함수 생성
-def open_account():
+def open_account(): 
     print('새로운 계좌가 생성되었습니다.')
 
 # 입금
