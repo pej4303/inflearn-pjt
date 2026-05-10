@@ -1,18 +1,18 @@
 package section07_set;
 
-import section05_linkedList.MyLinkedList;
-
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.Set;
+import java.util.Objects;
 
-public class MyHashSetV1 {
+/**
+ * - 제네릭 타입 적용
+ */
+public class MyHashSetV3<E> implements MySet<E> {
     // 초기 배열 값
     private static final int DEFAULT_CAPACITY = 16;
 
     // 배열 안에 연결리스트가 있고, 연결 리스트 안에 데이터가 저장되는 구조
-    private LinkedList<Integer>[] bucket = new LinkedList[DEFAULT_CAPACITY];
+    private LinkedList<E>[] bucket = new LinkedList[DEFAULT_CAPACITY];
 
     private int size = 0;
     private int capacity = DEFAULT_CAPACITY;
@@ -20,12 +20,12 @@ public class MyHashSetV1 {
     /**
      * 생성자
      */
-    public MyHashSetV1() {
+    public MyHashSetV3() {
         // LinkedList 초기화
         this.initBucket();
     }
 
-    public MyHashSetV1(int capacity) {
+    public MyHashSetV3(int capacity) {
         this.capacity = capacity;
         // LinkedList 초기화
         this.initBucket();
@@ -45,12 +45,12 @@ public class MyHashSetV1 {
      * 데이터 저장
      * @param value
      */
-    public boolean add(int value) {
+    public boolean add(E value) {
         // 1. value를 가지고 해시 인덱스 구하기
         int hashIndex = this.hashIndex(value);
 
         // 2.구한 해시 인덱스에 값이 있는지 확인
-        LinkedList<Integer> list = this.bucket[hashIndex];
+        LinkedList<E> list = this.bucket[hashIndex];
         if (list.contains(value)) {
             return false;
         }
@@ -68,29 +68,15 @@ public class MyHashSetV1 {
      * 데이터 삭제
      * @param value
      */
-    public boolean remove(int value) {
+    public boolean remove(E value) {
         // 1. value를 가지고 해시 인덱스 구하기
         int hashIndex = this.hashIndex(value);
 
         // 2.구한 해시 인덱스에 값 확인
-        LinkedList<Integer> list = this.bucket[hashIndex];
+        LinkedList<E> list = this.bucket[hashIndex];
 
         // 3. LinkedList에 값 삭제
-        /**
-         * ★★★★ 중요 ★★★★
-         * remove(Object obj) , remove(int index) 이렇게 2가지 있음
-         * 해당 값(value)을 지워야하기 때문에 래퍼 타입으로 변경해서 넘겨줘야 함!!!
-         *
-         * LinkedList의 remove() 메서드는 이렇게 2가지 있음
-         *
-         * list.remove(int index): 리스트의 몇 번째 요소를 지울 것인가?
-         * list.remove(Object o): 리스트에서 이 객체와 같은 값을 찾아 지울 것인가?
-         *
-         *
-         */
-        // list.remove(value); => 10번째 인덱스를 삭제해줘
-        // int형 변수를 Integer 객체로 만들어서 전달해야 제대로 인식함
-        boolean result = list.remove(Integer.valueOf(value)); // => '10'이라는 값을 삭제해줘
+        boolean result = list.remove(value);
 
         if (result) {
             // 4. 사이즈 감소
@@ -107,9 +93,12 @@ public class MyHashSetV1 {
      * @param value
      * @return
      */
-    private int hashIndex(int value) {
-        // 나머지 연산
-        return value % this.capacity;
+    private int hashIndex(E value) {
+        // 1. 해시코드 구하기
+        int hashCode = Objects.hashCode(value);
+//        System.out.println("hashCode = " + hashCode);
+        // 2. 음수 방지를 위해 절댓값으로 변경 후 나머지 연산
+        return Math.abs(hashCode) % this.capacity;
     }
 
     /**
@@ -117,21 +106,15 @@ public class MyHashSetV1 {
      * @param searchValue
      * @return
      */
-    private boolean contains(int searchValue) {
-        int hashIndex = this.hashIndex(searchValue);
-        LinkedList<Integer> list = this.bucket[hashIndex];  // O(1)
+    public boolean contains(E searchValue) {
+        int hashIndex = this.hashIndex(searchValue);    // O(1)
+        LinkedList<E> list = this.bucket[hashIndex];  // O(1)
         return list.contains(searchValue);  // O(n) : 최악의 경우, 분산되어있기 때문에 O(1)
-
-        /**
-         * 만약 this.bucket[hashIndex] 값이 없다면 NullPointerException 발생함
-         * 따라서 변수를 할당해서 하는것이 좋음
-         */
-        // return this.bucket[hashIndex].contains(searchValue);
     }
 
     @Override
     public String toString() {
-        return "MyHashSetV1{" +
+        return "MyHashSetV3{" +
                 "bucket=" + Arrays.toString(bucket) +
                 ", size=" + size +
                 ", capacity=" + capacity +
@@ -139,22 +122,23 @@ public class MyHashSetV1 {
     }
 
     public static void main(String[] args) {
-        MyHashSetV1 set = new MyHashSetV1();
-        set.add(1);
-        set.add(2);
-        set.add(3);
-        set.add(4);
-        set.add(5);
-        set.add(2); // 중복
+        MySet<String> set = new MyHashSetV3<>(10);
+        set.add("A");
+        set.add("B");
+        set.add("C");
+        set.add("D");
+        set.add("SET");
+        set.add("D"); // 중복
         System.out.println(set);
 
         // 검색
-        int searchValue = 2;
+        String searchValue = "SET";
         boolean contains = set.contains(searchValue);
         System.out.println("값 있니? " + contains);
 
         // 삭제
-        boolean removeResult = set.remove(searchValue);
+        String removeValue = "D";
+        boolean removeResult = set.remove(removeValue);
         System.out.println("removeResult = " + removeResult);
     }
 }
