@@ -1,7 +1,9 @@
 package section07_set;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 public class HashStart {
     static final int CAPACITY = 10;
