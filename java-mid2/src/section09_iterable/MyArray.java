@@ -1,5 +1,6 @@
 package section09_iterable;
 
+import java.util.Arrays;
 import java.util.Iterator;
 
 /**
@@ -19,11 +20,30 @@ public class MyArray implements Iterable<Integer> {
         return new MyArrayIterable(this.numbers);
     }
 
+    @Override
+    public String toString() {
+        return "MyArray{" +
+                "numbers=" + Arrays.toString(numbers) +
+                '}';
+    }
+
     public static void main(String[] args) {
-        MyArray myArray = new MyArray(new int[] {1, 2, 3, 4, 5});
+        MyArray myArray = new MyArray(new int[] {1, 4, 5, 2});
+
+        /**
+         * 자바는 Iterable 인터페이스를 구현한 객체에 대해서
+         * 향상된 for문을 사용 할 수 있게 해줌
+         */
+        for (int num : myArray) {
+            System.out.println(num);
+        }
+        // 자바는 컴파일 시점에 아래와 같이 코드를 변경함
+        /*
         Iterator<Integer> iterator = myArray.iterator();
         while (iterator.hasNext()) {
-            System.out.println(iterator.next());
+            Integer num = iterator.next();
+            System.out.println(num);
         }
+        */
     }
 }
