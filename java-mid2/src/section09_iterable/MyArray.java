@@ -1,7 +1,6 @@
 package section09_iterable;
 
-import java.util.Arrays;
-import java.util.Iterator;
+import java.util.*;
 
 /**
  * 자료 구조
@@ -45,5 +44,9 @@ public class MyArray implements Iterable<Integer> {
             System.out.println(num);
         }
         */
+
+        List<String> list = new  ArrayList<>();
+
+        List<String> list2 = Collections.emptyList();
     }
 }
