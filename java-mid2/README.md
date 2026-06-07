@@ -13,12 +13,11 @@ src
          ├─ section03_generic2
          ├─ section04_arrayList
          ├─ section05_linkedList
-         └─ section06_list
-           ├─ MyList
-           ├─ MyGenericArrayList
-           └─ MyGenericLinkedList 
+         ├─ section06_list
+         ├─ section07_set
+         ├─ section08_map
+         └─ section09_iterable
 ```
-
 
 ## 🚀 기술 스택
 
@@ -26,5 +25,5 @@ src
 + Java 21
 
 ### ✅ ETC & Tools
-+ IntelliJ IDEA 2025.1.1.1
++ IntelliJ IDEA
 ---
