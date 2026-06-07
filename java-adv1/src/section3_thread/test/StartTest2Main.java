@@ -1,5 +1,7 @@
 package section3_thread.test;
 
+import static util.MyLogger.log;
+
 /**
  * 문제 2: Runnable 구현
  *
@@ -19,4 +21,24 @@ package section3_thread.test;
  * 09:53:40.726 [  counter] value: 5
  */
 public class StartTest2Main {
+    static class CounterRunnable implements Runnable {
+        @Override
+        public void run() {
+            for(int i=1; i<=5; i++) {
+                log("value: %d".formatted(i));
+
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        Thread thread = new Thread(new CounterRunnable());
+        thread.setName("counter");
+        thread.start();
+    }
 }

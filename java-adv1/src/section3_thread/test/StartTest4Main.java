@@ -1,5 +1,7 @@
 package section3_thread.test;
 
+import static util.MyLogger.log;
+
 /**
  * 문제 4: 여러 스레드 사용
  *
@@ -21,4 +23,38 @@ package section3_thread.test;
  * ... 무한 실행
  */
 public class StartTest4Main {
+    public static void main(String[] args) {
+        Thread thread1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        log("A");
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+        thread1.setName("Thread-A");
+
+        Thread thread2 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        log("B");
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+        thread2.setName("Thread-B");
+
+        thread1.start();
+        thread2.start();
+    }
 }

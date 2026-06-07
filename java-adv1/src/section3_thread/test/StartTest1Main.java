@@ -1,5 +1,7 @@
 package section3_thread.test;
 
+import static util.MyLogger.log;
+
 /**
  * 문제 1: Thread 상속
  *
@@ -18,4 +20,23 @@ package section3_thread.test;
  * 09:46:27.349 [ Thread-0] value: 5
  */
 public class StartTest1Main {
+    static class CounterThread extends Thread {
+        @Override
+        public void run() {
+            for(int i=1; i<=5; i++) {
+                log("value: %d".formatted(i));
+
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        CounterThread  counterThread = new CounterThread();
+        counterThread.start();
+    }
 }

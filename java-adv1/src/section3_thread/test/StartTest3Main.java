@@ -1,5 +1,7 @@
 package section3_thread.test;
 
+import static util.MyLogger.log;
+
 /**
  * 문제 3: Runnable 익명 클래스 구현
  *
@@ -8,4 +10,23 @@ package section3_thread.test;
  *
  */
 public class StartTest3Main {
+    public static void main(String[] args) {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i=1; i<=5; i++) {
+                    log("value: %d".formatted(i));
+
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        });
+
+        thread.setName("counter");
+        thread.start();
+    }
 }
