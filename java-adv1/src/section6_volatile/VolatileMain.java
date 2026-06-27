@@ -19,13 +19,16 @@ public class VolatileMain {
     }
 
     static class MyTask implements Runnable {
-        boolean runFlag = true;
+//        boolean runFlag = true;
+        // 메인 메모리에서 값을 직접 읽기
+        volatile boolean runFlag = true;
 
         @Override
         public void run() {
             log("task 시작");
-            while (runFlag) {
-                // runFlag가 false가 되면 나감
+            while (runFlag) { // runFlag가 false가 되면 나감
+                // 이렇게 하면 캐시 메모리가 다시 갱신됨
+                System.out.println("ddd");
             }
             log("task 종료");
         }
