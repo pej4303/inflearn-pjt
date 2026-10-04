@@ -4,6 +4,16 @@ import lambda.Procedure;
 
 import java.util.Arrays;
 
+/**
+ * 문제 4. 람다로 변경 - 간결하게 코드 작성하기
+ *
+ * - 문제 설명
+ * 이전 문제에서 익명 클래스로 작성한 부분을 람다로 변경해라.
+ * measure() 메서드와 Procedure 인터페이스는 그대로 둔다.
+ * main()에서 익명 클래스를 사용하지 말고, 람다를 이용하여 더욱 간결하게 코드를 작성해라.
+ *
+ * - 실행 결과
+ */
 public class M4Example {
     public static void measure(Procedure p) {
         long startNs = System.nanoTime();
